@@ -49,7 +49,20 @@ module "create_attachment" {
 
   create_tgw_attachment = true
   name                  = "tardigrade-tgw-${random_string.this.result}"
+  routes                = local.routes
   subnet_ids            = module.vpc.private_subnets
   transit_gateway_id    = data.terraform_remote_state.prereq.outputs.tgw_id
   vpc_id                = module.vpc.vpc_id
+}
+
+locals {
+  remote_ipv4_cidr = "10.1.0.0/16"
+
+  routes = [for rt in concat(module.vpc.public_route_table_ids, module.vpc.private_route_table_ids) :
+    {
+      route_table_id              = rt
+      destination_cidr_block      = local.remote_ipv4_cidr
+      destination_ipv6_cidr_block = null
+    }
+  ]
 }
