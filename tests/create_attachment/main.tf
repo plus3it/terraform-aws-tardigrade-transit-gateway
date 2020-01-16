@@ -6,6 +6,12 @@ provider aws {
   region = "us-east-1"
 }
 
+provider aws {
+  region  = "us-east-1"
+  alias   = "owner"
+  profile = "owner"
+}
+
 data "terraform_remote_state" "prereq" {
   backend = "local"
   config = {
@@ -31,7 +37,7 @@ module "create_attachment" {
 
   providers = {
     aws       = aws
-    aws.owner = aws
+    aws.owner = aws.owner
   }
 
   create_tgw_attachment = true
