@@ -5,5 +5,6 @@ has shared it with the second account. This module will attach a VPC that exists
 gateway and then go into the first account and accept the attachment.
 
 ## Tests
+
 Given the necessity of two accounts to test this module, the tests assume one of the AWS profiles used for credentials is
-called owner.
+called `owner`.
