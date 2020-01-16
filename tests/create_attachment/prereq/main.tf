@@ -12,7 +12,11 @@ provider aws {
   profile = "owner"
 }
 
-data "aws_caller_identity" "current" {}
+data "aws_caller_identity" "this" {}
+
+data "aws_caller_identity" "owner" {
+  provider = aws.owner
+}
 
 resource "random_string" "this" {
   length  = 6
@@ -46,14 +50,17 @@ resource "aws_ram_resource_association" "this" {
 }
 
 resource "aws_ram_principal_association" "this" {
+  count    = local.create_ram_principal_association ? 1 : 0
   provider = aws.owner
 
-  principal          = data.aws_caller_identity.current.account_id
+  principal          = data.aws_caller_identity.this.account_id
   resource_share_arn = aws_ram_resource_share.this.arn
 }
 
 locals {
   test_id = random_string.this.result
+
+  create_ram_principal_association = data.aws_caller_identity.this.account_id != data.aws_caller_identity.owner.account_id
 }
 
 output "tgw_id" {
