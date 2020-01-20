@@ -73,7 +73,8 @@ terraform/install: | $(BIN_DIR) guard/program/jq
 	$(@D) --version
 	@ echo "[$@]: Completed successfully!"
 
-terraform-docs/install: TFDOCS_VERSION ?= latest
+#terraform-docs/install: TFDOCS_VERSION ?= latest
+terraform-docs/install: TFDOCS_VERSION ?= tags/v0.7.0
 terraform-docs/install: | $(BIN_DIR) guard/program/jq
 	@ $(MAKE) install/gh-release/$(@D) FILENAME="$(BIN_DIR)/$(@D)" OWNER=segmentio REPO=$(@D) VERSION=$(TFDOCS_VERSION) QUERY='.name | endswith("$(OS)-$(ARCH)")'
 

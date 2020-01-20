@@ -53,6 +53,8 @@ data "aws_caller_identity" "this" {
 
 data "aws_caller_identity" "owner" {
   count = var.create_tgw_attachment ? 1 : 0
+
+  provider = aws.owner
 }
 
 locals {
