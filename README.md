@@ -13,7 +13,7 @@ called owner.
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | create\_tgw\_attachment | Controls whether to create the TGW attachment | bool | `"true"` | no |
-| dns\_support | (Optional) Whether DNS support is enabled. Valid values: disable, enable. | string | `"enable"` | no |
+| dns\_support | \(Optional\) Whether DNS support is enabled. Valid values: disable, enable. | string | `"enable"` | no |
 | name | The name of the TGW attachment for tagging purposes | string | `"null"` | no |
 | subnet\_ids | A list of subnets inside the VPC | list | `<list>` | no |
 | tags | A map of tags to apply to the TGW attachment | map | `<map>` | no |
