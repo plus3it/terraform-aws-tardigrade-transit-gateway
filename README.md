@@ -27,8 +27,8 @@ called `owner`.
 | vpc\_id | VPC ID to attach to the TGW | `string` | n/a | yes |
 | create\_tgw\_attachment | Controls whether to create the TGW attachment | `bool` | `true` | no |
 | dns\_support | (Optional) Whether DNS support is enabled. Valid values: disable, enable. | `string` | `"enable"` | no |
-| owner\_routes | List of AWS route objects to create with the "owner" provider. Each route will be created with a target of the transit gateway. | <pre>list(object({<br>    route_table_id              = string<br>    destination_cidr_block      = string<br>    destination_ipv6_cidr_block = string<br>  }))<br></pre> | `[]` | no |
-| routes | List of AWS route objects to create with the "aws" provider. Each route will be created with a target of the transit gateway. | <pre>list(object({<br>    route_table_id              = string<br>    destination_cidr_block      = string<br>    destination_ipv6_cidr_block = string<br>  }))<br></pre> | `[]` | no |
+| owner\_routes | List of AWS route objects to create with the "owner" provider. Each route will be created with a target of the transit gateway. | <pre>list(object({<br>    route_table_id              = string<br>    destination_cidr_block      = string<br>    destination_ipv6_cidr_block = string<br>  }))</pre> | `[]` | no |
+| routes | List of AWS route objects to create with the "aws" provider. Each route will be created with a target of the transit gateway. | <pre>list(object({<br>    route_table_id              = string<br>    destination_cidr_block      = string<br>    destination_ipv6_cidr_block = string<br>  }))</pre> | `[]` | no |
 | subnet\_ids | A list of subnets inside the VPC | `list` | `[]` | no |
 | tags | A map of tags to apply to the TGW attachment | `map` | `{}` | no |
 
