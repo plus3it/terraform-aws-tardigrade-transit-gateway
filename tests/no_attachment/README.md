@@ -2,6 +2,12 @@
 
 
 <!-- BEGIN TFDOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | ~> 0.12.0 |
+
 ## Providers
 
 No provider.
