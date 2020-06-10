@@ -16,8 +16,8 @@ module "create_attachment" {
   source = "../../"
 
   providers = {
-    aws       = "aws"
-    aws.owner = "aws.owner"
+    aws       = aws
+    aws.owner = aws.owner
   }
 
   create_tgw_attachment = false

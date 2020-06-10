@@ -14,6 +14,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   vpc_id             = var.vpc_id
   dns_support        = var.dns_support
   tags               = merge(var.tags, map("Name", var.name))
+
+  depends_on = [null_resource.dependencies]
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "this" {
@@ -45,6 +47,14 @@ resource "aws_route" "owner" {
   destination_cidr_block      = var.owner_routes[count.index].destination_cidr_block
   destination_ipv6_cidr_block = var.owner_routes[count.index].destination_ipv6_cidr_block
   transit_gateway_id          = local.transit_gateway_id
+}
+
+resource "null_resource" "dependencies" {
+  count = var.create_tgw_attachment ? 1 : 0
+
+  triggers = {
+    this = join(",", var.dependencies)
+  }
 }
 
 data "aws_caller_identity" "this" {

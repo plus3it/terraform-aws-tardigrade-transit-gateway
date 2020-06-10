@@ -4,6 +4,12 @@ variable "create_tgw_attachment" {
   default     = true
 }
 
+variable "dependencies" {
+  description = "List of resource dependencies to force terraform to wait until they are done"
+  default     = []
+  type        = list(string)
+}
+
 variable "name" {
   description = "The name of the TGW attachment for tagging purposes"
   type        = string
