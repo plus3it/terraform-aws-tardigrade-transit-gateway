@@ -35,7 +35,7 @@ resource "aws_route" "this" {
   route_table_id              = var.routes[count.index].route_table_id
   destination_cidr_block      = var.routes[count.index].destination_cidr_block
   destination_ipv6_cidr_block = var.routes[count.index].destination_ipv6_cidr_block
-  transit_gateway_id          = local.transit_gateway_id
+  transit_gateway_id          = local.create_tgw_accepter ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].transit_gateway_id : aws_ec2_transit_gateway_vpc_attachment.this[0].transit_gateway_id
 }
 
 resource "aws_route" "owner" {
@@ -46,7 +46,7 @@ resource "aws_route" "owner" {
   route_table_id              = var.owner_routes[count.index].route_table_id
   destination_cidr_block      = var.owner_routes[count.index].destination_cidr_block
   destination_ipv6_cidr_block = var.owner_routes[count.index].destination_ipv6_cidr_block
-  transit_gateway_id          = local.transit_gateway_id
+  transit_gateway_id          = local.create_tgw_accepter ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].transit_gateway_id : aws_ec2_transit_gateway_vpc_attachment.this[0].transit_gateway_id
 }
 
 resource "null_resource" "dependencies" {
@@ -69,8 +69,4 @@ data "aws_caller_identity" "owner" {
 
 locals {
   create_tgw_accepter = var.create_tgw_attachment ? data.aws_caller_identity.this[0].account_id != data.aws_caller_identity.owner[0].account_id : false
-
-  transit_gateway_id = var.create_tgw_attachment ? (
-    local.create_tgw_accepter ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].transit_gateway_id : aws_ec2_transit_gateway_vpc_attachment.this[0].transit_gateway_id
-  ) : false
 }
