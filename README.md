@@ -3,6 +3,31 @@
 This module will manage a Transit Gateway, as well as its Route Tables, Routes, VPC attachments, Route
 Table associations and propagations, and VPC routes associated with the VPC attachments.
 
+## Submodules
+
+This module includes several submodules for different workflows and use cases.
+
+- [`cross-account-vpc-attachment`](modules/cross-account-vpc-attachment): Creates a cross-account Transit
+  Gateway VPC Attachment by managing the invite/accept interaction between two accounts. Requires two
+  providers, one for each account. The providers must be different accounts, and must be using the same
+  region. The Transit Gateway must be shared using the AWS Resource Access Manager.
+- [`cross-region-peering-attachment`](modules/cross-region-peering-attachment):: Creates a cross-region
+  Peering Attachment, managing the invite/accept workflow between the two regions. Requires two providers,
+  one for each region. The providers may be the same or different account, but **must** be different
+  regions.
+- [`peering-accepter`](modules/peering-accepter): Accepts a peering attachment request. Used by the
+  cross-region-peering-attachment module.
+- [`peering-attachment`](modules/peering-attachment): Sends a peering attachment invite. Used by the
+  cross-region-peering-attachment module.
+- [`route`](modules/route): Creates a Transit Gateway Route.
+- [`route-table`](modules/route-table): Creates a Transit Gateway Route Table.
+- [`vpc-accepter`](modules/vpc-accepter): Accepts a VPC attachment request. Used by the cross-account-vpc-attachment
+  module. Will also the create Transit Gateway Route Table association and propagations for the attachment,
+  and will manage VPC routes associated with the attachment.
+- [`vpc-attachment`](modules/vpc-attachment): Sends a VPC attachment invite. Used by the cross-account-vpc-attachment
+  module. Will also the create Transit Gateway Route Table association and propagations for the attachment,
+  and will manage VPC routes associated with the attachment.
+
 <!-- BEGIN TFDOCS -->
 ## Requirements
 
@@ -42,3 +67,9 @@ Table associations and propagations, and VPC routes associated with the VPC atta
 | vpc\_attachments | Map of TGW peering attachment objects |
 
 <!-- END TFDOCS -->
+
+## Testing
+
+This module has tests that require multiple providers. In order to simplify the provider config, it
+assumes you have AWS Profiles named `resource-owner` and `resource-member`. These profiles should
+resolve a credential for two different accounts.
