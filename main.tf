@@ -1,72 +1,81 @@
-provider "aws" {}
-
-provider "aws" {
-  alias = "owner"
+terraform {
+  required_version = ">= 0.13.0"
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
-  count = var.create_tgw_attachment ? 1 : 0
-
-  provider = aws
-
-  subnet_ids         = var.subnet_ids
-  transit_gateway_id = var.transit_gateway_id
-  vpc_id             = var.vpc_id
-  dns_support        = var.dns_support
-  tags               = merge(var.tags, map("Name", var.name))
-
-  depends_on = [null_resource.dependencies]
+resource aws_ec2_transit_gateway this {
+  amazon_side_asn                 = var.amazon_side_asn
+  auto_accept_shared_attachments  = var.auto_accept_shared_attachments
+  default_route_table_association = var.default_route_table_association
+  default_route_table_propagation = var.default_route_table_propagation
+  description                     = var.description
+  dns_support                     = var.dns_support
+  tags                            = var.tags
+  vpn_ecmp_support                = var.vpn_ecmp_support
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "this" {
-  count = local.create_tgw_accepter ? 1 : 0
+module route_tables {
+  source   = "./modules/route-table"
+  for_each = { for route_table in var.route_tables : route_table.name => route_table }
 
-  provider = aws.owner
+  transit_gateway_id = aws_ec2_transit_gateway.this.id
 
-  transit_gateway_attachment_id = aws_ec2_transit_gateway_vpc_attachment.this[0].id
-  tags                          = merge(var.tags, map("Name", var.name))
+  tags = merge(
+    { "Name" : each.key },
+    each.value.tags,
+  )
 }
 
-resource "aws_route" "this" {
-  count = var.create_tgw_attachment ? length(var.routes) : 0
+module routes {
+  source   = "./modules/route"
+  for_each = { for route in var.routes : route.name => route }
 
-  provider = aws
+  blackhole              = each.value.blackhole
+  destination_cidr_block = each.value.destination_cidr_block
 
-  route_table_id              = var.routes[count.index].route_table_id
-  destination_cidr_block      = var.routes[count.index].destination_cidr_block
-  destination_ipv6_cidr_block = var.routes[count.index].destination_ipv6_cidr_block
-  transit_gateway_id          = local.create_tgw_accepter ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].transit_gateway_id : aws_ec2_transit_gateway_vpc_attachment.this[0].transit_gateway_id
+  transit_gateway_route_table_id = each.value.default_route_table ? (
+    aws_ec2_transit_gateway.this.association_default_route_table_id) : (
+    try(
+      module.route_tables[each.value.transit_gateway_route_table].route_table.id,
+      each.value.transit_gateway_route_table
+    )
+  )
+
+  transit_gateway_attachment_id = try(
+    module.vpc_attachments[each.value.transit_gateway_attachment].vpc_attachment.id,
+    each.value.transit_gateway_attachment
+  )
 }
 
-resource "aws_route" "owner" {
-  count = var.create_tgw_attachment ? length(var.owner_routes) : 0
+module vpc_attachments {
+  source   = "./modules/vpc-attachment"
+  for_each = { for attachment in var.vpc_attachments : attachment.name => attachment }
 
-  provider = aws.owner
+  subnet_ids         = each.value.subnet_ids
+  transit_gateway_id = aws_ec2_transit_gateway.this.id
+  dns_support        = each.value.dns_support
+  ipv6_support       = each.value.ipv6_support
+  vpc_routes         = each.value.vpc_routes
 
-  route_table_id              = var.owner_routes[count.index].route_table_id
-  destination_cidr_block      = var.owner_routes[count.index].destination_cidr_block
-  destination_ipv6_cidr_block = var.owner_routes[count.index].destination_ipv6_cidr_block
-  transit_gateway_id          = local.create_tgw_accepter ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].transit_gateway_id : aws_ec2_transit_gateway_vpc_attachment.this[0].transit_gateway_id
-}
+  transit_gateway_default_route_table_association = each.value.transit_gateway_default_route_table_association
+  transit_gateway_default_route_table_propagation = each.value.transit_gateway_default_route_table_propagation
 
-resource "null_resource" "dependencies" {
-  count = var.create_tgw_attachment ? 1 : 0
-
-  triggers = {
-    this = join(",", var.dependencies)
+  transit_gateway_route_table_association = each.value.transit_gateway_route_table_association == null ? null : {
+    transit_gateway_route_table_id = try(
+      module.route_tables[each.value.transit_gateway_route_table_association].route_table.id,
+      each.value.transit_gateway_route_table_association
+    )
   }
-}
 
-data "aws_caller_identity" "this" {
-  count = var.create_tgw_attachment ? 1 : 0
-}
+  transit_gateway_route_table_propagations = [for route_table in each.value.transit_gateway_route_table_propagations : {
+    name = route_table
+    transit_gateway_route_table_id = try(
+      module.route_tables[route_table].route_table.id,
+      route_table
+    )
+  }]
 
-data "aws_caller_identity" "owner" {
-  count = var.create_tgw_attachment ? 1 : 0
-
-  provider = aws.owner
-}
-
-locals {
-  create_tgw_accepter = var.create_tgw_attachment ? data.aws_caller_identity.this[0].account_id != data.aws_caller_identity.owner[0].account_id : false
+  tags = merge(
+    { "Name" : each.key },
+    each.value.tags,
+  )
 }
