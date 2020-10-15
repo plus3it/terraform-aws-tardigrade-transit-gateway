@@ -51,13 +51,13 @@ variable dns_support {
 }
 
 variable tags {
-  description = "Whether VPN Equal Cost Multipath Protocol support is enabled (valid values: disable, enable)"
+  description = "Map of tags to apply to the TGW and associated resources"
   type        = map(string)
   default     = {}
 }
 
 variable vpn_ecmp_support {
-  description = "Map of tags to apply to the TGW and associated resources"
+  description = "Whether VPN Equal Cost Multipath Protocol support is enabled (valid values: disable, enable)"
   type        = string
   default     = "disable"
   validation {
