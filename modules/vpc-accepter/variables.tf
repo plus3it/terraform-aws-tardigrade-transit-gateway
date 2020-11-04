@@ -42,6 +42,8 @@ variable transit_gateway_route_table_propagations {
 variable vpc_routes {
   description = "List of VPC route objects with a target of the VPC attachment"
   type = list(object({
+    # `name` is used as for_each key
+    name                        = string
     route_table_id              = string
     destination_cidr_block      = string
     destination_ipv6_cidr_block = string
