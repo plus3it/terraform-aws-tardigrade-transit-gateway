@@ -25,7 +25,7 @@ No requirements.
 | transit\_gateway\_default\_route\_table\_propagation | Boolean whether the VPC Attachment should propagate routes to the Transit Gateway propagation default route table | `bool` | `true` | no |
 | transit\_gateway\_route\_table\_association | ID of the Transit Gateway route table to associate with the VPC attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br>    transit_gateway_route_table_id = string<br>  })</pre> | `null` | no |
 | transit\_gateway\_route\_table\_propagations | List of Transit Gateway route tables this VPC attachment will propagate routes to | <pre>list(object({<br>    # `name` is used as for_each key<br>    name                           = string<br>    transit_gateway_route_table_id = string<br>  }))</pre> | `[]` | no |
-| vpc\_routes | List of VPC route objects with a target of the VPC attachment | <pre>list(object({<br>    route_table_id              = string<br>    destination_cidr_block      = string<br>    destination_ipv6_cidr_block = string<br>  }))</pre> | `[]` | no |
+| vpc\_routes | List of VPC route objects with a target of the VPC attachment | <pre>list(object({<br>    # `name` is used as for_each key<br>    name                        = string<br>    route_table_id              = string<br>    destination_cidr_block      = string<br>    destination_ipv6_cidr_block = string<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 

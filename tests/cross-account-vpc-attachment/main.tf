@@ -20,10 +20,10 @@ module vpc_attachment {
   ram_share_id                = module.ram_share_accepter.share_accepter.share_id
   ram_resource_association_id = module.ram_share.resource_associations["tardigrade-tgw"].resource_association.id
 
-  subnet_ids         = module.vpc.private_subnets
+  subnet_ids         = module.vpc_member.private_subnets
   transit_gateway_id = module.tgw.transit_gateway.id
   routes             = local.routes
-  vpc_routes         = local.vpc_routes
+  vpc_routes         = concat(local.vpc_routes_member, local.vpc_routes_owner)
 
   transit_gateway_route_table_association = {
     transit_gateway_route_table_id = module.tgw.route_tables["foo-${local.id}"].route_table.id
@@ -40,6 +40,10 @@ module vpc_attachment {
       transit_gateway_route_table_id = module.tgw.route_tables["bar-${local.id}"].route_table.id
     },
   ]
+
+  depends_on = [
+    module.tgw,
+  ]
 }
 
 module tgw {
@@ -54,6 +58,23 @@ module tgw {
   default_route_table_association = "disable"
   default_route_table_propagation = "disable"
 
+  vpc_attachments = [
+    {
+      # name used as for_each key
+      name         = "foo-${local.id}"
+      subnet_ids   = module.vpc_owner.private_subnets
+      dns_support  = "enable"
+      ipv6_support = "disable"
+      tags         = {}
+      vpc_routes   = []
+
+      transit_gateway_default_route_table_association = true
+      transit_gateway_default_route_table_propagation = true
+      transit_gateway_route_table_association         = null
+      transit_gateway_route_table_propagations        = []
+    },
+  ]
+
   tags = {
     Name = "tardigrade-testing-${local.id}"
   }
@@ -62,10 +83,20 @@ module tgw {
 locals {
   id = data.terraform_remote_state.prereq.outputs.test_id.result
 
-  vpc_routes = [for i, rt in concat(module.vpc.public_route_table_ids, module.vpc.private_route_table_ids) :
+  vpc_routes_member = [for i, rt in concat(module.vpc_member.public_route_table_ids, module.vpc_member.private_route_table_ids) :
     {
       name                        = "route-${i}"
       provider                    = "aws"
+      route_table_id              = rt
+      destination_cidr_block      = "10.0.0.0/16"
+      destination_ipv6_cidr_block = null
+    }
+  ]
+
+  vpc_routes_owner = [for i, rt in concat(module.vpc_owner.public_route_table_ids, module.vpc_owner.private_route_table_ids) :
+    {
+      name                        = "route-${i}"
+      provider                    = "aws.owner"
       route_table_id              = rt
       destination_cidr_block      = "10.1.0.0/16"
       destination_ipv6_cidr_block = null
@@ -136,8 +167,20 @@ module ram_share_accepter {
   resource_share_arn = module.ram_share.resource_share.arn
 }
 
-module vpc {
+module vpc_member {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v2.57.0"
+
+  name            = "tardigrade-tgw-${local.id}"
+  cidr            = "10.1.0.0/16"
+  azs             = ["us-east-1a", "us-east-1b"]
+  private_subnets = ["10.1.1.0/24", "10.1.2.0/24"]
+}
+
+module vpc_owner {
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v2.57.0"
+  providers = {
+    aws = aws.owner
+  }
 
   name            = "tardigrade-tgw-${local.id}"
   cidr            = "10.0.0.0/16"
