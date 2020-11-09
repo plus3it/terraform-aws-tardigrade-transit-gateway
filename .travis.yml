@@ -15,12 +15,12 @@ jobs:
       name: Project Syntax Verification
       script: make && make docker/run target=lint
     - stage: deploy
-      if: branch = master AND type = push AND repo = plus3it/terraform-aws-tardigrade-transit-gateway-attachment
+      if: branch = master AND type = push AND repo = plus3it/terraform-aws-tardigrade-transit-gateway
       before_script:
         - |
           PRIOR_VERSION=$(git describe --abbrev=0 --tags)
           RELEASE_VERSION=$(grep current_version $TRAVIS_BUILD_DIR/.bumpversion.cfg | sed 's/^.*= //' )
-          RELEASE_BODY="* [terraform-aws-tardigrade-transit-gateway-attachment v$RELEASE_VERSION CHANGELOG](https://github.com/plus3it/terraform-aws-tardigrade-transit-gateway-attachment/blob/$RELEASE_VERSION/CHANGELOG.md)"
+          RELEASE_BODY="* [terraform-aws-tardigrade-transit-gateway v$RELEASE_VERSION CHANGELOG](https://github.com/plus3it/terraform-aws-tardigrade-transit-gateway/blob/$RELEASE_VERSION/CHANGELOG.md)"
           export PRIOR_VERSION RELEASE_VERSION RELEASE_BODY
       script: skip
       before_deploy:
@@ -37,5 +37,5 @@ jobs:
         draft: false
         on:
           branch: master
-          repo: plus3it/terraform-aws-tardigrade-transit-gateway-attachment
+          repo: plus3it/terraform-aws-tardigrade-transit-gateway
           condition: '"$PRIOR_VERSION" != "$RELEASE_VERSION"'
