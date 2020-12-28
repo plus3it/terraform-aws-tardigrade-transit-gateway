@@ -1,8 +1,8 @@
-provider aws {
+provider "aws" {
   alias = "owner"
 }
 
-module vpc_attachment {
+module "vpc_attachment" {
   source = "../vpc-attachment"
 
   subnet_ids         = var.subnet_ids
@@ -21,7 +21,7 @@ module vpc_attachment {
   )
 }
 
-module vpc_accepter {
+module "vpc_accepter" {
   source = "../vpc-accepter"
   providers = {
     aws = aws.owner
@@ -47,7 +47,7 @@ module vpc_accepter {
   )
 }
 
-module routes {
+module "routes" {
   source   = "../route"
   for_each = { for route in var.routes : route.name => route }
   providers = {
@@ -59,7 +59,7 @@ module routes {
   transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
 }
 
-data aws_ec2_transit_gateway this {
+data "aws_ec2_transit_gateway" "this" {
   provider = aws.owner
   id       = var.transit_gateway_id
 }

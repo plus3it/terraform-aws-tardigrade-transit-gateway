@@ -1,8 +1,8 @@
-provider aws {
+provider "aws" {
   region = "us-east-1"
 }
 
-module tgw {
+module "tgw" {
   source = "../.."
 
   amazon_side_asn                 = 64512
@@ -149,13 +149,13 @@ module "vpc2" {
   private_subnets = ["10.1.1.0/24", "10.1.2.0/24"]
 }
 
-data terraform_remote_state prereq {
+data "terraform_remote_state" "prereq" {
   backend = "local"
   config = {
     path = "prereq/terraform.tfstate"
   }
 }
 
-output tgw {
+output "tgw" {
   value = module.tgw
 }

@@ -1,8 +1,8 @@
-provider aws {
+provider "aws" {
   alias = "peer"
 }
 
-module peering_attachment {
+module "peering_attachment" {
   source = "../peering-attachment"
 
   peer_account_id         = var.peer_account_id
@@ -12,7 +12,7 @@ module peering_attachment {
   tags                    = var.tags
 }
 
-module peering_accepter {
+module "peering_accepter" {
   source = "../peering-accepter"
   providers = {
     aws = aws.peer
