@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 0.13.0"
 }
 
-resource aws_ec2_transit_gateway this {
+resource "aws_ec2_transit_gateway" "this" {
   amazon_side_asn                 = var.amazon_side_asn
   auto_accept_shared_attachments  = var.auto_accept_shared_attachments
   default_route_table_association = var.default_route_table_association
@@ -13,7 +13,7 @@ resource aws_ec2_transit_gateway this {
   vpn_ecmp_support                = var.vpn_ecmp_support
 }
 
-module route_tables {
+module "route_tables" {
   source   = "./modules/route-table"
   for_each = { for route_table in var.route_tables : route_table.name => route_table }
 
@@ -25,7 +25,7 @@ module route_tables {
   )
 }
 
-module routes {
+module "routes" {
   source   = "./modules/route"
   for_each = { for route in var.routes : route.name => route }
 
@@ -46,7 +46,7 @@ module routes {
   )
 }
 
-module vpc_attachments {
+module "vpc_attachments" {
   source   = "./modules/vpc-attachment"
   for_each = { for attachment in var.vpc_attachments : attachment.name => attachment }
 

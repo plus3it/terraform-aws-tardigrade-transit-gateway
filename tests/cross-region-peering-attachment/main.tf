@@ -1,15 +1,15 @@
-provider aws {
+provider "aws" {
   region  = "us-east-1"
   profile = "resource-member"
 }
 
-provider aws {
+provider "aws" {
   region  = "us-east-2"
   alias   = "peer"
   profile = "resource-owner"
 }
 
-module peering_attachment {
+module "peering_attachment" {
   source = "../../modules/cross-region-peering-attachment"
 
   providers = {
@@ -27,7 +27,7 @@ module peering_attachment {
   }
 }
 
-module tgw {
+module "tgw" {
   source = "../.."
 
   description = "tardigrade-tgw-${local.id}"
@@ -37,7 +37,7 @@ module tgw {
   }
 }
 
-module tgw_peer {
+module "tgw_peer" {
   source = "../.."
   providers = {
     aws = aws.peer
@@ -55,21 +55,21 @@ locals {
   id = data.terraform_remote_state.prereq.outputs.test_id.result
 }
 
-data terraform_remote_state prereq {
+data "terraform_remote_state" "prereq" {
   backend = "local"
   config = {
     path = "prereq/terraform.tfstate"
   }
 }
 
-data aws_caller_identity peer {
+data "aws_caller_identity" "peer" {
   provider = aws.peer
 }
 
-data aws_region peer {
+data "aws_region" "peer" {
   provider = aws.peer
 }
 
-output peering_attachment {
+output "peering_attachment" {
   value = module.peering_attachment
 }

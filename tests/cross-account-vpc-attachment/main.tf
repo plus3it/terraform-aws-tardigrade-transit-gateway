@@ -1,15 +1,15 @@
-provider aws {
+provider "aws" {
   region  = "us-east-1"
   profile = "resource-member"
 }
 
-provider aws {
+provider "aws" {
   region  = "us-east-1"
   alias   = "owner"
   profile = "resource-owner"
 }
 
-module vpc_attachment {
+module "vpc_attachment" {
   source = "../../modules/cross-account-vpc-attachment"
 
   providers = {
@@ -46,7 +46,7 @@ module vpc_attachment {
   ]
 }
 
-module tgw {
+module "tgw" {
   source = "../.."
   providers = {
     aws = aws.owner
@@ -139,7 +139,7 @@ locals {
   ]
 }
 
-module ram_share {
+module "ram_share" {
   source = "git::https://github.com/plus3it/terraform-aws-tardigrade-ram-share.git?ref=3.0.0"
   providers = {
     aws = aws.owner
@@ -156,7 +156,7 @@ module ram_share {
   ]
 }
 
-module ram_share_accepter {
+module "ram_share_accepter" {
   source = "git::https://github.com/plus3it/terraform-aws-tardigrade-ram-share.git//modules/cross_account_principal_association?ref=3.0.0"
 
   providers = {
@@ -167,7 +167,7 @@ module ram_share_accepter {
   resource_share_arn = module.ram_share.resource_share.arn
 }
 
-module vpc_member {
+module "vpc_member" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v2.57.0"
 
   name            = "tardigrade-tgw-${local.id}"
@@ -176,7 +176,7 @@ module vpc_member {
   private_subnets = ["10.1.1.0/24", "10.1.2.0/24"]
 }
 
-module vpc_owner {
+module "vpc_owner" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v2.57.0"
   providers = {
     aws = aws.owner
@@ -188,13 +188,13 @@ module vpc_owner {
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
-data terraform_remote_state prereq {
+data "terraform_remote_state" "prereq" {
   backend = "local"
   config = {
     path = "prereq/terraform.tfstate"
   }
 }
 
-output vpc_attachment {
+output "vpc_attachment" {
   value = module.vpc_attachment
 }

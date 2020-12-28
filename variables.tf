@@ -1,10 +1,10 @@
-variable amazon_side_asn {
+variable "amazon_side_asn" {
   description = "Private Autonomous System Number (ASN) for the Amazon side of a BGP session (range is 64512 to 65534 for 16-bit ASNs and 4200000000 to 4294967294 for 32-bit ASN)"
   type        = number
   default     = 64512
 }
 
-variable auto_accept_shared_attachments {
+variable "auto_accept_shared_attachments" {
   description = "Whether resource attachment requests are automatically accepted (valid values: disable, enable)"
   type        = string
   default     = "disable"
@@ -14,7 +14,7 @@ variable auto_accept_shared_attachments {
   }
 }
 
-variable default_route_table_association {
+variable "default_route_table_association" {
   description = "Whether resource attachments are automatically associated with the default association route table (valid values: disable, enable)"
   type        = string
   default     = "enable"
@@ -24,7 +24,7 @@ variable default_route_table_association {
   }
 }
 
-variable default_route_table_propagation {
+variable "default_route_table_propagation" {
   description = "Whether resource attachments automatically propagate routes to the default propagation route table (valid values: disable, enable)"
   type        = string
   default     = "enable"
@@ -34,13 +34,13 @@ variable default_route_table_propagation {
   }
 }
 
-variable description {
+variable "description" {
   description = "Description of the EC2 Transit Gateway"
   type        = string
   default     = null
 }
 
-variable dns_support {
+variable "dns_support" {
   description = "Whether DNS support is enabled (valid values: disable, enable)"
   type        = string
   default     = "enable"
@@ -50,13 +50,13 @@ variable dns_support {
   }
 }
 
-variable tags {
+variable "tags" {
   description = "Map of tags to apply to the TGW and associated resources"
   type        = map(string)
   default     = {}
 }
 
-variable vpn_ecmp_support {
+variable "vpn_ecmp_support" {
   description = "Whether VPN Equal Cost Multipath Protocol support is enabled (valid values: disable, enable)"
   type        = string
   default     = "disable"
@@ -66,7 +66,7 @@ variable vpn_ecmp_support {
   }
 }
 
-variable route_tables {
+variable "route_tables" {
   description = "List of TGW route tables to create with the transit gateway"
   type = list(object({
     # `name` used as for_each key
@@ -76,7 +76,7 @@ variable route_tables {
   default = []
 }
 
-variable routes {
+variable "routes" {
   description = "List of TGW routes to add to TGW route tables"
   type = list(object({
     # `name` used as for_each key
@@ -92,7 +92,7 @@ variable routes {
   default = []
 }
 
-variable vpc_attachments {
+variable "vpc_attachments" {
   description = "List of VPC attachments to create with the transit gateway"
   type = list(object({
     # `name` used as for_each key
