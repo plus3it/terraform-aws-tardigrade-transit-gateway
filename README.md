@@ -33,13 +33,14 @@ This module includes several submodules for different workflows and use cases.
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13.0 |
+| terraform | >= 0.13 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | n/a |
+| aws | >= 3.0 |
 
 ## Inputs
 

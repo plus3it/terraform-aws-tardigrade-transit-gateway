@@ -15,8 +15,8 @@
 .tardigrade-ci
 tardigrade-ci/
 
-# eclint
-.git/
-
 # terratest
 tests/go.*
+
+# terraform lock file
+.terraform.lock.hcl

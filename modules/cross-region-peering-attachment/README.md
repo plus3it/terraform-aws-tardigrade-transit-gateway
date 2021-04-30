@@ -6,7 +6,10 @@ may be the same or different accounts, but must be different regions.
 <!-- BEGIN TFDOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.13 |
+| aws | >= 3.0 |
 
 ## Providers
 
