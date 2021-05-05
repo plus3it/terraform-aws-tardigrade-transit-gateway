@@ -5,13 +5,16 @@ Terraform module for managing a cross-account Transit Gateway VPC Attachment.
 <!-- BEGIN TFDOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.13 |
+| aws | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws.owner | n/a |
+| aws.owner | >= 3.0 |
 
 ## Inputs
 

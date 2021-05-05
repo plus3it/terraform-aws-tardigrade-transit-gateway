@@ -6,17 +6,17 @@ updates:
     interval: daily
   open-pull-requests-limit: 10
 - package-ecosystem: terraform
-  directory: "/tests/create_attachment"
+  directory: "/tests/cross-account-vpc-attachment"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-- package-ecosystem: pip
-  directory: "/"
+- package-ecosystem: terraform
+  directory: "/tests/cross-region-peering-attachment"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
-- package-ecosystem: gomod
-  directory: "/tests"
+- package-ecosystem: terraform
+  directory: "/tests/tgw"
   schedule:
     interval: daily
   open-pull-requests-limit: 10
