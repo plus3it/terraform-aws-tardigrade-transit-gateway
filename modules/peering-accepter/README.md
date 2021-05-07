@@ -7,26 +7,31 @@ Terraform module for managing a Transit Gateway Peering Attachment Accepter.
 
 | Name | Version |
 |------|---------|
-| terraform | >= 0.13 |
-| aws | >= 3.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| aws | >= 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| peering\_attachment\_id | ID of the TGW peering attachment | `string` | n/a | yes |
-| tags | Map of tags to apply to the TGW peering attachment | `map(string)` | `{}` | no |
+| <a name="input_peering_attachment_id"></a> [peering\_attachment\_id](#input\_peering\_attachment\_id) | ID of the TGW peering attachment | `string` | n/a | yes |
+| <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW peering attachment | `map(string)` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| peering\_attachment\_accepter | Object with the Transit Gateway peering attachment accepter attributes |
+| <a name="output_peering_attachment_accepter"></a> [peering\_attachment\_accepter](#output\_peering\_attachment\_accepter) | Object with the Transit Gateway peering attachment accepter attributes |
 
 <!-- END TFDOCS -->
