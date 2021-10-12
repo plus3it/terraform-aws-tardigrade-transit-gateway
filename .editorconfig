@@ -19,7 +19,3 @@ indent_size = 1
 
 [LICENSE]
 indent_size = none
-
-[*.go]
-indent_style = tab
-indent_size = 1

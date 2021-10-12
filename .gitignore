@@ -20,6 +20,3 @@ tardigrade-ci/
 
 # Cache created by pytest
 tests/__pycache__/
-
-# terratest
-tests/go.*
