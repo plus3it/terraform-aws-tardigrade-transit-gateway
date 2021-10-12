@@ -15,8 +15,11 @@
 .tardigrade-ci
 tardigrade-ci/
 
-# terratest
-tests/go.*
-
 # terraform lock file
 .terraform.lock.hcl
+
+# Cache created by pytest
+tests/__pycache__/
+
+# terratest
+tests/go.*

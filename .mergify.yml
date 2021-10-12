@@ -2,8 +2,8 @@ pull_request_rules:
   - name: automatic approve dependabot pull requests
     conditions:
       - author~=dependabot\[bot\]|dependabot-preview\[bot\]
-      - status-success=Travis CI - Branch
       - status-success=Travis CI - Pull Request
+      - label!=terraform
     actions:
       review:
         type: APPROVE
