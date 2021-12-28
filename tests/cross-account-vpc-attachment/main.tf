@@ -1,12 +1,24 @@
 provider "aws" {
   region  = "us-east-1"
   profile = "resource-member"
+
+  default_tags {
+    tags = {
+      TARDIGRADE_TEST = true
+    }
+  }
 }
 
 provider "aws" {
   region  = "us-east-1"
   alias   = "owner"
   profile = "resource-owner"
+
+  default_tags {
+    tags = {
+      TARDIGRADE_TEST = true
+    }
+  }
 }
 
 module "vpc_attachment" {
