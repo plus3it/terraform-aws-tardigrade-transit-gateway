@@ -1,7 +1,3 @@
-provider "aws" {
-  alias = "owner"
-}
-
 module "vpc_attachment" {
   source = "../vpc-attachment"
 
