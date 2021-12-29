@@ -7,7 +7,7 @@ Terraform module for managing a cross-account Transit Gateway VPC Attachment.
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
 
 ## Providers
@@ -26,8 +26,6 @@ Terraform module for managing a cross-account Transit Gateway VPC Attachment.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_ram_resource_association_id"></a> [ram\_resource\_association\_id](#input\_ram\_resource\_association\_id) | ID of the RAM resource association for the Transit Gateway | `string` | n/a | yes |
-| <a name="input_ram_share_id"></a> [ram\_share\_id](#input\_ram\_share\_id) | ID of the RAM Share associated with the Transit Gateway | `string` | n/a | yes |
 | <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of subnets to associate with the VPC attachment | `list(string)` | n/a | yes |
 | <a name="input_transit_gateway_id"></a> [transit\_gateway\_id](#input\_transit\_gateway\_id) | ID of the Transit Gateway | `string` | n/a | yes |
 | <a name="input_dns_support"></a> [dns\_support](#input\_dns\_support) | Whether DNS support is enabled. Valid values: disable, enable. | `string` | `"enable"` | no |
