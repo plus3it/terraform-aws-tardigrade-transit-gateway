@@ -1,6 +1,6 @@
 provider "aws" {
   region  = "us-east-1"
-  profile = "resource-member"
+  profile = "aws"
 
   default_tags {
     tags = {
@@ -12,7 +12,7 @@ provider "aws" {
 provider "aws" {
   region  = "us-east-1"
   alias   = "owner"
-  profile = "resource-owner"
+  profile = "awsalternate"
 
   default_tags {
     tags = {
