@@ -29,9 +29,6 @@ module "vpc_attachment" {
     aws.owner = aws.owner
   }
 
-  ram_share_id                = module.ram_share_accepter.share_accepter.share_id
-  ram_resource_association_id = module.ram_share.resource_associations["tardigrade-tgw"].resource_association.id
-
   subnet_ids         = module.vpc_member.private_subnets
   transit_gateway_id = module.tgw.transit_gateway.id
   routes             = local.routes
