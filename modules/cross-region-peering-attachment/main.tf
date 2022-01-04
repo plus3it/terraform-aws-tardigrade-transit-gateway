@@ -1,7 +1,3 @@
-provider "aws" {
-  alias = "peer"
-}
-
 module "peering_attachment" {
   source = "../peering-attachment"
 

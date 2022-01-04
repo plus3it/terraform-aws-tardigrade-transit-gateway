@@ -1,7 +1,3 @@
-provider "aws" {
-  alias = "owner"
-}
-
 module "vpc_attachment" {
   source = "../vpc-attachment"
 
@@ -10,15 +6,8 @@ module "vpc_attachment" {
   cross_account      = true
   dns_support        = var.dns_support
   ipv6_support       = var.ipv6_support
+  tags               = var.tags
   vpc_routes         = [for route in var.vpc_routes : route if route.provider == "aws"]
-
-  tags = merge(
-    {
-      ram_share_id                = var.ram_share_id
-      ram_resource_association_id = var.ram_resource_association_id
-    },
-    var.tags,
-  )
 }
 
 module "vpc_accepter" {

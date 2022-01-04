@@ -1,12 +1,24 @@
 provider "aws" {
   region  = "us-east-1"
-  profile = "resource-member"
+  profile = "aws"
+
+  default_tags {
+    tags = {
+      TARDIGRADE_TEST = true
+    }
+  }
 }
 
 provider "aws" {
   region  = "us-east-1"
   alias   = "owner"
-  profile = "resource-owner"
+  profile = "awsalternate"
+
+  default_tags {
+    tags = {
+      TARDIGRADE_TEST = true
+    }
+  }
 }
 
 module "vpc_attachment" {
@@ -16,9 +28,6 @@ module "vpc_attachment" {
     aws       = aws
     aws.owner = aws.owner
   }
-
-  ram_share_id                = module.ram_share_accepter.share_accepter.share_id
-  ram_resource_association_id = module.ram_share.resource_associations["tardigrade-tgw"].resource_association.id
 
   subnet_ids         = module.vpc_member.private_subnets
   transit_gateway_id = module.tgw.transit_gateway.id

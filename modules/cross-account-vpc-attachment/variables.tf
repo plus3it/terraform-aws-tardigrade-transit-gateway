@@ -1,13 +1,3 @@
-variable "ram_share_id" {
-  description = "ID of the RAM Share associated with the Transit Gateway"
-  type        = string
-}
-
-variable "ram_resource_association_id" {
-  description = "ID of the RAM resource association for the Transit Gateway"
-  type        = string
-}
-
 variable "subnet_ids" {
   description = "List of subnets to associate with the VPC attachment"
   type        = list(string)
