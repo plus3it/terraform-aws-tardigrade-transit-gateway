@@ -177,7 +177,7 @@ module "ram_share_accepter" {
 }
 
 module "vpc_member" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.1"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.3"
 
   name            = "tardigrade-tgw-${local.id}"
   cidr            = "10.1.0.0/16"
