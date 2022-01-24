@@ -133,7 +133,7 @@ locals {
 }
 
 module "vpc1" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.1"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.3"
 
   name            = "tardigrade-testing-vpc1-${local.id}"
   cidr            = "10.0.0.0/16"
