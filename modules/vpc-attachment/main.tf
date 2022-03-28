@@ -1,10 +1,11 @@
 resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
-  subnet_ids         = var.subnet_ids
-  transit_gateway_id = var.transit_gateway_id
-  vpc_id             = data.aws_subnet.one.vpc_id
-  dns_support        = var.dns_support
-  ipv6_support       = var.ipv6_support
-  tags               = var.tags
+  subnet_ids             = var.subnet_ids
+  transit_gateway_id     = var.transit_gateway_id
+  vpc_id                 = data.aws_subnet.one.vpc_id
+  appliance_mode_support = var.appliance_mode_support
+  dns_support            = var.dns_support
+  ipv6_support           = var.ipv6_support
+  tags                   = var.tags
 
   # default assocation and propagation values must be:
   #   `true` if transit gateway is owned by another account (shared using RAM)

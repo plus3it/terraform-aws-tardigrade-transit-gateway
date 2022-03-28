@@ -96,11 +96,12 @@ variable "vpc_attachments" {
   description = "List of VPC attachments to create with the transit gateway"
   type = list(object({
     # `name` used as for_each key
-    name         = string
-    subnet_ids   = list(string)
-    dns_support  = string
-    ipv6_support = string
-    tags         = map(string)
+    name                   = string
+    subnet_ids             = list(string)
+    appliance_mode_support = string
+    dns_support            = string
+    ipv6_support           = string
+    tags                   = map(string)
     vpc_routes = list(object({
       # `name` is used as for_each key
       name                        = string

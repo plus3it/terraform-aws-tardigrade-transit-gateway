@@ -88,11 +88,12 @@ locals {
   vpc_attachments = [
     {
       # name used as for_each key
-      name         = "foo-${local.id}"
-      subnet_ids   = module.vpc1.private_subnets
-      dns_support  = "enable"
-      ipv6_support = "disable"
-      tags         = {}
+      name                   = "foo-${local.id}"
+      subnet_ids             = module.vpc1.private_subnets
+      appliance_mode_support = "disable"
+      dns_support            = "enable"
+      ipv6_support           = "disable"
+      tags                   = {}
       vpc_routes = [
         {
           # name used as for_each key
@@ -111,11 +112,12 @@ locals {
       ]
     },
     {
-      name         = "bar-${local.id}"
-      subnet_ids   = module.vpc2.private_subnets
-      dns_support  = "enable"
-      ipv6_support = "disable"
-      tags         = {}
+      name                   = "bar-${local.id}"
+      subnet_ids             = module.vpc2.private_subnets
+      appliance_mode_support = "disable"
+      dns_support            = "enable"
+      ipv6_support           = "disable"
+      tags                   = {}
       vpc_routes = [
         {
           name                        = "route-bar1-${local.id}"
