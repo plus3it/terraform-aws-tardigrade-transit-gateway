@@ -34,13 +34,13 @@ This module includes several submodules for different workflows and use cases.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.15.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.15.0 |
 
 ## Resources
 
@@ -60,7 +60,7 @@ This module includes several submodules for different workflows and use cases.
 | <a name="input_route_tables"></a> [route\_tables](#input\_route\_tables) | List of TGW route tables to create with the transit gateway | <pre>list(object({<br>    # `name` used as for_each key<br>    name = string<br>    tags = map(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_routes"></a> [routes](#input\_routes) | List of TGW routes to add to TGW route tables | <pre>list(object({<br>    # `name` used as for_each key<br>    name                   = string<br>    blackhole              = bool<br>    default_route_table    = bool<br>    destination_cidr_block = string<br>    # name from `vpc_attachments` or id of a pre-existing tgw attachment<br>    transit_gateway_attachment = string<br>    # name from `route_tables` or id of a pre-existing route table<br>    transit_gateway_route_table = string<br>  }))</pre> | `[]` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW and associated resources | `map(string)` | `{}` | no |
-| <a name="input_vpc_attachments"></a> [vpc\_attachments](#input\_vpc\_attachments) | List of VPC attachments to create with the transit gateway | <pre>list(object({<br>    # `name` used as for_each key<br>    name         = string<br>    subnet_ids   = list(string)<br>    dns_support  = string<br>    ipv6_support = string<br>    tags         = map(string)<br>    vpc_routes = list(object({<br>      # `name` is used as for_each key<br>      name                        = string<br>      route_table_id              = string<br>      destination_cidr_block      = string<br>      destination_ipv6_cidr_block = string<br>    }))<br>    transit_gateway_default_route_table_association = bool<br>    transit_gateway_default_route_table_propagation = bool<br>    # name from `route_tables` or id of a pre-existing route table<br>    transit_gateway_route_table_association = string<br>    # list of route table names from `route_tables` or ids of pre-existing route tables<br>    transit_gateway_route_table_propagations = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_vpc_attachments"></a> [vpc\_attachments](#input\_vpc\_attachments) | List of VPC attachments to create with the transit gateway | <pre>list(object({<br>    # `name` used as for_each key<br>    name                   = string<br>    subnet_ids             = list(string)<br>    appliance_mode_support = string<br>    dns_support            = string<br>    ipv6_support           = string<br>    tags                   = map(string)<br>    vpc_routes = list(object({<br>      # `name` is used as for_each key<br>      name                        = string<br>      route_table_id              = string<br>      destination_cidr_block      = string<br>      destination_ipv6_cidr_block = string<br>    }))<br>    transit_gateway_default_route_table_association = bool<br>    transit_gateway_default_route_table_propagation = bool<br>    # name from `route_tables` or id of a pre-existing route table<br>    transit_gateway_route_table_association = string<br>    # list of route table names from `route_tables` or ids of pre-existing route tables<br>    transit_gateway_route_table_propagations = list(string)<br>  }))</pre> | `[]` | no |
 | <a name="input_vpn_ecmp_support"></a> [vpn\_ecmp\_support](#input\_vpn\_ecmp\_support) | Whether VPN Equal Cost Multipath Protocol support is enabled (valid values: disable, enable) | `string` | `"disable"` | no |
 
 ## Outputs
@@ -77,5 +77,5 @@ This module includes several submodules for different workflows and use cases.
 ## Testing
 
 This module has tests that require multiple providers. In order to simplify the provider config, it
-assumes you have AWS Profiles named `resource-owner` and `resource-member`. These profiles should
+assumes you have AWS Profiles named `aws` and `awsalternate`. These profiles should
 resolve a credential for two different accounts.

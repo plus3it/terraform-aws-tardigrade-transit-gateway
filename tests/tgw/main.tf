@@ -88,11 +88,12 @@ locals {
   vpc_attachments = [
     {
       # name used as for_each key
-      name         = "foo-${local.id}"
-      subnet_ids   = module.vpc1.private_subnets
-      dns_support  = "enable"
-      ipv6_support = "disable"
-      tags         = {}
+      name                   = "foo-${local.id}"
+      subnet_ids             = module.vpc1.private_subnets
+      appliance_mode_support = "disable"
+      dns_support            = "enable"
+      ipv6_support           = "disable"
+      tags                   = {}
       vpc_routes = [
         {
           # name used as for_each key
@@ -111,11 +112,12 @@ locals {
       ]
     },
     {
-      name         = "bar-${local.id}"
-      subnet_ids   = module.vpc2.private_subnets
-      dns_support  = "enable"
-      ipv6_support = "disable"
-      tags         = {}
+      name                   = "bar-${local.id}"
+      subnet_ids             = module.vpc2.private_subnets
+      appliance_mode_support = "disable"
+      dns_support            = "enable"
+      ipv6_support           = "disable"
+      tags                   = {}
       vpc_routes = [
         {
           name                        = "route-bar1-${local.id}"
@@ -133,7 +135,7 @@ locals {
 }
 
 module "vpc1" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.3"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.13.0"
 
   name            = "tardigrade-testing-vpc1-${local.id}"
   cidr            = "10.0.0.0/16"
@@ -142,7 +144,7 @@ module "vpc1" {
 }
 
 module "vpc2" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.3"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.13.0"
 
   name            = "tardigrade-testing-vpc2-${local.id}"
   cidr            = "10.1.0.0/16"

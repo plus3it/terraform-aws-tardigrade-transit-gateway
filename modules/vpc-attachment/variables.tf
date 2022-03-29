@@ -14,6 +14,16 @@ variable "cross_account" {
   default     = false
 }
 
+variable "appliance_mode_support" {
+  description = "Whether Appliance Mode support is enabled. Valid values: disable, enable"
+  type        = string
+  default     = "disable"
+  validation {
+    condition     = contains(["enable", "disable"], var.appliance_mode_support)
+    error_message = "`appliance_mode_support` must be one of: \"enable\", \"disable\"."
+  }
+}
+
 variable "dns_support" {
   description = "Whether DNS support is enabled. Valid values: disable, enable"
   type        = string

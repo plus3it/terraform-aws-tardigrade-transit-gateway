@@ -70,12 +70,13 @@ module "tgw" {
   vpc_attachments = [
     {
       # name used as for_each key
-      name         = "foo-${local.id}"
-      subnet_ids   = module.vpc_owner.private_subnets
-      dns_support  = "enable"
-      ipv6_support = "disable"
-      tags         = {}
-      vpc_routes   = []
+      name                   = "foo-${local.id}"
+      subnet_ids             = module.vpc_owner.private_subnets
+      appliance_mode_support = "disable"
+      dns_support            = "enable"
+      ipv6_support           = "disable"
+      tags                   = {}
+      vpc_routes             = []
 
       transit_gateway_default_route_table_association = true
       transit_gateway_default_route_table_propagation = true
@@ -177,7 +178,7 @@ module "ram_share_accepter" {
 }
 
 module "vpc_member" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.3"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.13.0"
 
   name            = "tardigrade-tgw-${local.id}"
   cidr            = "10.1.0.0/16"
@@ -186,7 +187,7 @@ module "vpc_member" {
 }
 
 module "vpc_owner" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.11.3"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.13.0"
   providers = {
     aws = aws.owner
   }

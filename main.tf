@@ -46,11 +46,12 @@ module "vpc_attachments" {
   source   = "./modules/vpc-attachment"
   for_each = { for attachment in var.vpc_attachments : attachment.name => attachment }
 
-  subnet_ids         = each.value.subnet_ids
-  transit_gateway_id = aws_ec2_transit_gateway.this.id
-  dns_support        = each.value.dns_support
-  ipv6_support       = each.value.ipv6_support
-  vpc_routes         = each.value.vpc_routes
+  subnet_ids             = each.value.subnet_ids
+  transit_gateway_id     = aws_ec2_transit_gateway.this.id
+  appliance_mode_support = each.value.appliance_mode_support
+  dns_support            = each.value.dns_support
+  ipv6_support           = each.value.ipv6_support
+  vpc_routes             = each.value.vpc_routes
 
   transit_gateway_default_route_table_association = each.value.transit_gateway_default_route_table_association
   transit_gateway_default_route_table_propagation = each.value.transit_gateway_default_route_table_propagation
