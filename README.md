@@ -77,5 +77,5 @@ This module includes several submodules for different workflows and use cases.
 ## Testing
 
 This module has tests that require multiple providers. In order to simplify the provider config, it
-assumes you have AWS Profiles named `resource-owner` and `resource-member`. These profiles should
+assumes you have AWS Profiles named `aws` and `awsalternate`. These profiles should
 resolve a credential for two different accounts.
