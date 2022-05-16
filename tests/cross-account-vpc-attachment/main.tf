@@ -150,7 +150,7 @@ locals {
 }
 
 module "ram_share" {
-  source = "git::https://github.com/plus3it/terraform-aws-tardigrade-ram-share.git?ref=3.0.1"
+  source = "git::https://github.com/plus3it/terraform-aws-tardigrade-ram-share.git?ref=4.0.0"
   providers = {
     aws = aws.owner
   }
