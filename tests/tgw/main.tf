@@ -144,7 +144,7 @@ module "vpc1" {
 }
 
 module "vpc2" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.14.2"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v3.14.3"
 
   name            = "tardigrade-testing-vpc2-${local.id}"
   cidr            = "10.1.0.0/16"
