@@ -1,4 +1,10 @@
+data "aws_ec2_transit_gateway_attachment" "attachment" {
+  transit_gateway_id = var.transit_gateway_id
+  id                 = var.transit_gateway_attachment_id
+}
+
 resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "this" {
+  count = data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? 1 : 0
   transit_gateway_attachment_id = var.transit_gateway_attachment_id
 
   transit_gateway_default_route_table_association = var.transit_gateway_default_route_table_association
@@ -8,7 +14,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "this" {
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "this" {
-  count = var.transit_gateway_route_table_association != null ? 1 : 0
+  count = var.transit_gateway_route_table_association != null && data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? 1 : 0
 
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment_accepter.this.id
   transit_gateway_route_table_id = var.transit_gateway_route_table_association.transit_gateway_route_table_id
@@ -16,6 +22,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "this" {
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
   for_each = { for route_table in var.transit_gateway_route_table_propagations : route_table.name => route_table }
+  count    = data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? length(var.transit_gateway_route_table_propagations) : 0
 
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment_accepter.this.id
   transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
@@ -23,6 +30,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 
 resource "aws_route" "this" {
   for_each = { for route in var.vpc_routes : route.name => route }
+  count    = data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? length(var.vpc_routes) : 0
 
   route_table_id              = each.value.route_table_id
   destination_cidr_block      = each.value.destination_cidr_block
