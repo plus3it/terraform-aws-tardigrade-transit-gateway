@@ -1,10 +1,3 @@
-# terraform-aws-tardigrade-transit-gateway/vpc-accepter
-
-Terraform module for managing a Transit Gateway VPC Attachment Accepter. This module is used in a
-cross-account VPC attachment workflow. This module will manage the attachment, as well as any Transit
-Gateway route table association or propagations, and VPC routes.
-
-<!-- BEGIN TFDOCS -->
 ## Requirements
 
 | Name | Version |
@@ -18,17 +11,26 @@ Gateway route table association or propagations, and VPC routes.
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
 
+## Modules
+
+No modules.
+
 ## Resources
 
 | Name | Type |
 |------|------|
+| [aws_ec2_transit_gateway_route_table_association.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_association) | resource |
+| [aws_ec2_transit_gateway_route_table_propagation.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_route_table_propagation) | resource |
+| [aws_ec2_transit_gateway_vpc_attachment_accepter.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ec2_transit_gateway_vpc_attachment_accepter) | resource |
+| [aws_route.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route) | resource |
+| [aws_ec2_transit_gateway_attachment.attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_transit_gateway_attachment) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_transit_gateway_attachment_id"></a> [transit\_gateway\_attachment\_id](#input\_transit\_gateway\_attachment\_id) | ID of the TGW attachment | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW attachment | `map(string)` | `{}` | no |
+| <a name="input_transit_gateway_attachment_id"></a> [transit\_gateway\_attachment\_id](#input\_transit\_gateway\_attachment\_id) | ID of the TGW attachment | `string` | n/a | yes |
 | <a name="input_transit_gateway_default_route_table_association"></a> [transit\_gateway\_default\_route\_table\_association](#input\_transit\_gateway\_default\_route\_table\_association) | Boolean whether the VPC Attachment should be associated to the Transit Gateway default route table | `bool` | `true` | no |
 | <a name="input_transit_gateway_default_route_table_propagation"></a> [transit\_gateway\_default\_route\_table\_propagation](#input\_transit\_gateway\_default\_route\_table\_propagation) | Boolean whether the VPC Attachment should propagate routes to the Transit Gateway propagation default route table | `bool` | `true` | no |
 | <a name="input_transit_gateway_route_table_association"></a> [transit\_gateway\_route\_table\_association](#input\_transit\_gateway\_route\_table\_association) | ID of the Transit Gateway route table to associate with the VPC attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br>    transit_gateway_route_table_id = string<br>  })</pre> | `null` | no |
@@ -43,5 +45,3 @@ Gateway route table association or propagations, and VPC routes.
 | <a name="output_route_table_propagations"></a> [route\_table\_propagations](#output\_route\_table\_propagations) | Map of Transit Gateway route table propagation objects |
 | <a name="output_vpc_attachment_accepter"></a> [vpc\_attachment\_accepter](#output\_vpc\_attachment\_accepter) | Object with the Transit Gateway VPC attachment accepter attributes |
 | <a name="output_vpc_routes"></a> [vpc\_routes](#output\_vpc\_routes) | Map of VPC route objects |
-
-<!-- END TFDOCS -->
