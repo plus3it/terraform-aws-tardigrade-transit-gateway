@@ -27,7 +27,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 }
 
 resource "aws_route" "this" {
-  for_each = var.vpc_routes
+  for_each                    = var.vpc_routes
   route_table_id              = each.value.route_table_id
   destination_cidr_block      = each.value.destination_cidr_block
   destination_ipv6_cidr_block = each.value.destination_ipv6_cidr_block
