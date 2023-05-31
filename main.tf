@@ -11,7 +11,7 @@ resource "aws_ec2_transit_gateway" "this" {
 
 module "route_tables" {
   source   = "./modules/route-table"
-  for_each = { for index, route_table in var.route_tables : index => route_table }
+  for_each = { for route_table in var.route_tables : route_table.name => route_table }
 
   transit_gateway_id = aws_ec2_transit_gateway.this.id
 
@@ -44,7 +44,7 @@ module "routes" {
 
 module "vpc_attachments" {
   source   = "./modules/vpc-attachment"
-  for_each = { for index, attachment in var.vpc_attachments : index => attachment }
+  for_each = { for attachment in var.vpc_attachments : attachment.name => attachment }
 
   subnet_ids             = each.value.subnet_ids
   transit_gateway_id     = aws_ec2_transit_gateway.this.id
