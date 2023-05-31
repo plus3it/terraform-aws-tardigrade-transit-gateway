@@ -15,7 +15,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "this" {
 
 resource "aws_ec2_transit_gateway_route_table_association" "this" {
   count = var.transit_gateway_route_table_association != null && data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? 1 : 0
-  
+
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment_accepter.this.id
   transit_gateway_route_table_id = var.transit_gateway_route_table_association.transit_gateway_route_table_id
 }

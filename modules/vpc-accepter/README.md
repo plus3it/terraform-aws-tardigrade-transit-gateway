@@ -22,6 +22,7 @@ Gateway route table association or propagations, and VPC routes.
 
 | Name | Type |
 |------|------|
+| [aws_ec2_transit_gateway_attachment.attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ec2_transit_gateway_attachment) | data source |
 
 ## Inputs
 
