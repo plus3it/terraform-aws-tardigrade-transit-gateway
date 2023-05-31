@@ -22,15 +22,12 @@ resource "aws_ec2_transit_gateway_route_table_association" "this" {
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
   for_each                       = var.transit_gateway_route_table_propagations
-  count                          = data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? length(var.transit_gateway_route_table_propagations) : 0
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].id
   transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
 }
 
 resource "aws_route" "this" {
   for_each = var.vpc_routes
-  count    = data.aws_ec2_transit_gateway_attachment.attachment.auto_accept_shared_attachments == "disabled" ? length(var.vpc_routes) : 0
-
   route_table_id              = each.value.route_table_id
   destination_cidr_block      = each.value.destination_cidr_block
   destination_ipv6_cidr_block = each.value.destination_ipv6_cidr_block
