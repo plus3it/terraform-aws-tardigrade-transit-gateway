@@ -40,7 +40,7 @@ This module includes several submodules for different workflows and use cases.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.15.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.67.0 |
 
 ## Resources
 
