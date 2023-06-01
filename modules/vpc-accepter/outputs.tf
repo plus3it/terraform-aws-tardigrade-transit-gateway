@@ -3,7 +3,7 @@ output "vpc_attachment_accepter" {
   # accepter tags are null on initial apply rather than "known after apply"
   # this can cause a diff on second apply when the entire resource is output
   # in the caller config. workaround is to explicitly set tags to var.tags
-  value = merge(aws_ec2_transit_gateway_vpc_attachment_accepter.this, { tags = var.tags })
+  value = merge(try(aws_ec2_transit_gateway_vpc_attachment_accepter.this[0], data.aws_ec2_transit_gateway_attachment.this[0]), { tags = var.tags })
 }
 
 output "route_table_association" {

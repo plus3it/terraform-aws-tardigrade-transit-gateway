@@ -34,7 +34,7 @@ module "vpc_attachment" {
   routes             = local.routes
   vpc_routes         = concat(local.vpc_routes_member, local.vpc_routes_owner)
 
-  auto_accept_shared_attachments = "disable"
+  auto_accept_shared_attachments = "enable"
 
   transit_gateway_route_table_association = {
     transit_gateway_route_table_id = module.tgw.route_tables["foo-${local.id}"].route_table.id
@@ -66,7 +66,7 @@ module "tgw" {
   description  = "tardigrade-tgw-${local.id}"
   route_tables = local.route_tables
 
-  auto_accept_shared_attachments = "disable"
+  auto_accept_shared_attachments = "enable"
 
   default_route_table_association = "disable"
   default_route_table_propagation = "disable"
@@ -182,7 +182,7 @@ module "ram_share_accepter" {
 }
 
 module "vpc_member" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.1.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.0.0"
 
   name            = "tardigrade-tgw-${local.id}"
   cidr            = "10.1.0.0/16"
@@ -191,7 +191,7 @@ module "vpc_member" {
 }
 
 module "vpc_owner" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.1.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v5.0.0"
   providers = {
     aws = aws.owner
   }
