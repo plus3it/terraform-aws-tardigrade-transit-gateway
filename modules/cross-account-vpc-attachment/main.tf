@@ -17,9 +17,10 @@ module "vpc_accepter" {
     aws = aws.owner
   }
 
-  transit_gateway_attachment_id = module.vpc_attachment.vpc_attachment.id
-  vpc_routes                    = [for route in var.vpc_routes : route if route.provider == "aws.owner"]
-  tags                          = var.tags
+  transit_gateway_attachment_id  = module.vpc_attachment.vpc_attachment.id
+  auto_accept_shared_attachments = var.auto_accept_shared_attachments
+  vpc_routes                     = [for route in var.vpc_routes : route if route.provider == "aws.owner"]
+  tags                           = var.tags
 
   transit_gateway_route_table_association  = var.transit_gateway_route_table_association
   transit_gateway_route_table_propagations = var.transit_gateway_route_table_propagations

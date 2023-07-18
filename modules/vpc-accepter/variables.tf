@@ -3,6 +3,16 @@ variable "transit_gateway_attachment_id" {
   type        = string
 }
 
+variable "auto_accept_shared_attachments" {
+  description = "Whether resource attachment requests are automatically accepted (valid values: disable, enable)"
+  type        = string
+  default     = "disable"
+  validation {
+    condition     = contains(["enable", "disable"], var.auto_accept_shared_attachments)
+    error_message = "`auto_accept_shared_attachments` must be one of: \"enable\", \"disable\"."
+  }
+}
+
 variable "tags" {
   description = "Map of tags to apply to the TGW attachment"
   type        = map(string)

@@ -23,3 +23,5 @@ tests/__pycache__/
 
 # terratest
 tests/go.*
+
+.DS_Store
