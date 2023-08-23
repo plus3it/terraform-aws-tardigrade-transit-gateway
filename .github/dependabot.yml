@@ -1,37 +1,37 @@
 version: 2
 updates:
-# Maintain dependencies for GitHub Actions
-- package-ecosystem: github-actions
-  directory: /
-  schedule:
-    interval: weekly
-- package-ecosystem: docker
-  directory: "/"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: gomod
-  directory: "/tests"
-  schedule:
-    interval: weekly
-  open-pull-requests-limit: 10
-- package-ecosystem: terraform
-  directory: "/tests/cross-account-vpc-attachment"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: terraform
-  directory: "/tests/cross-region-peering-attachment"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: terraform
-  directory: "/tests/tgw"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-- package-ecosystem: terraform
-  directory: "/"
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 10
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: gomod
+    directory: "/tests"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+  - package-ecosystem: terraform
+    directory: "/tests/cross-account-vpc-attachment"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: terraform
+    directory: "/tests/cross-region-peering-attachment"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: terraform
+    directory: "/tests/tgw"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+  - package-ecosystem: terraform
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
