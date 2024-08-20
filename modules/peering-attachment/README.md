@@ -31,11 +31,13 @@ Terraform module for managing a Transit Gateway Peering Attachment.
 | <a name="input_options"></a> [options](#input\_options) | Object of options for the TGW peering attachment | <pre>object({<br>    dynamic_routing = optional(string)<br>  })</pre> | `null` | no |
 | <a name="input_peer_account_id"></a> [peer\_account\_id](#input\_peer\_account\_id) | ID of the AWS account that owns the Transit Gateway peer | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW peering attachment | `map(string)` | `{}` | no |
+| <a name="input_transit_gateway_route_table_association"></a> [transit\_gateway\_route\_table\_association](#input\_transit\_gateway\_route\_table\_association) | ID of the Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br>    transit_gateway_route_table_id = string<br>  })</pre> | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_peering_attachment"></a> [peering\_attachment](#output\_peering\_attachment) | Object with the Transit Gateway peering attachment attributes |
+| <a name="output_route_table_association"></a> [route\_table\_association](#output\_route\_table\_association) | Object with the Transit Gateway route table association attributes |
 
 <!-- END TFDOCS -->

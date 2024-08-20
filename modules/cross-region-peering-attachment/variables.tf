@@ -19,6 +19,14 @@ variable "peer_account_id" {
   default     = null
 }
 
+variable "peer_transit_gateway_route_table_association" {
+  description = "ID of the Peer Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table)"
+  type = object({
+    transit_gateway_route_table_id = string
+  })
+  default = null
+}
+
 variable "options" {
   description = "Object of options for the TGW peering attachment"
   type = object({
@@ -36,4 +44,12 @@ variable "tags" {
   description = "Map of tags to apply to the TGW peering attachments"
   type        = map(string)
   default     = {}
+}
+
+variable "transit_gateway_route_table_association" {
+  description = "ID of the Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table)"
+  type = object({
+    transit_gateway_route_table_id = string
+  })
+  default = null
 }
