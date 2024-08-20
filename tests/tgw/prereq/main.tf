@@ -2,7 +2,7 @@ resource "random_string" "this" {
   length  = 6
   upper   = false
   special = false
-  number  = false
+  numeric = false
 }
 
 output "test_id" {
