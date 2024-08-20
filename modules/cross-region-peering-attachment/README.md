@@ -26,6 +26,7 @@ No resources.
 | <a name="input_peer_region"></a> [peer\_region](#input\_peer\_region) | Region of EC2 Transit Gateway to peer with | `string` | n/a | yes |
 | <a name="input_peer_transit_gateway_id"></a> [peer\_transit\_gateway\_id](#input\_peer\_transit\_gateway\_id) | ID of the Transit Gateway to peer with | `string` | n/a | yes |
 | <a name="input_transit_gateway_id"></a> [transit\_gateway\_id](#input\_transit\_gateway\_id) | ID of the Transit Gateway | `string` | n/a | yes |
+| <a name="input_options"></a> [options](#input\_options) | Object of options for the TGW peering attachment | <pre>object({<br>    dynamic_routing = optional(string)<br>  })</pre> | `null` | no |
 | <a name="input_peer_account_id"></a> [peer\_account\_id](#input\_peer\_account\_id) | ID of the AWS account that owns the Transit Gateway peer | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW peering attachments | `map(string)` | `{}` | no |
 

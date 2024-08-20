@@ -1,6 +1,7 @@
 module "peering_attachment" {
   source = "../peering-attachment"
 
+  options                 = var.options
   peer_account_id         = var.peer_account_id
   peer_region             = var.peer_region
   peer_transit_gateway_id = var.peer_transit_gateway_id

@@ -19,6 +19,19 @@ variable "peer_account_id" {
   default     = null
 }
 
+variable "options" {
+  description = "Object of options for the TGW peering attachment"
+  type = object({
+    dynamic_routing = optional(string)
+  })
+  default = null
+
+  validation {
+    condition     = var.options != null && try(var.options.dynamic_routing, null) != null ? contains(["enable", "disable"], var.options.dynamic_routing) : true
+    error_message = "`var.options.dynamic_routing` must be one of: \"enable\", \"disable\"."
+  }
+}
+
 variable "tags" {
   description = "Map of tags to apply to the TGW peering attachment"
   type        = map(string)

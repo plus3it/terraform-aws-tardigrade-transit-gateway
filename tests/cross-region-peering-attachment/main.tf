@@ -22,6 +22,11 @@ module "peering_attachment" {
   peer_transit_gateway_id = module.tgw_peer.transit_gateway.id
   transit_gateway_id      = module.tgw.transit_gateway.id
 
+  # Although the API claims suport for the dynamic routing option, it will fail
+  # if set to anything other than null. Leaving the option in place to match the
+  # API spec, and to support future updates.
+  options = null
+
   tags = {
     Name = "tardigrade-testing-${local.id}"
   }
