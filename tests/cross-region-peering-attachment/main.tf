@@ -22,6 +22,19 @@ module "peering_attachment" {
   peer_transit_gateway_id = module.tgw_peer.transit_gateway.id
   transit_gateway_id      = module.tgw.transit_gateway.id
 
+  peer_transit_gateway_route_table_association = {
+    transit_gateway_route_table_id = module.tgw_peer.route_tables["tardigrade-testing-${local.id}"].route_table.id
+  }
+
+  transit_gateway_route_table_association = {
+    transit_gateway_route_table_id = module.tgw.route_tables["tardigrade-testing-${local.id}"].route_table.id
+  }
+
+  # Although the API claims suport for the dynamic routing option, it will fail
+  # if set to anything other than null. Leaving the option in place to match the
+  # API spec, and to support future updates.
+  options = null
+
   tags = {
     Name = "tardigrade-testing-${local.id}"
   }
@@ -31,6 +44,16 @@ module "tgw" {
   source = "../.."
 
   description = "tardigrade-tgw-${local.id}"
+
+  default_route_table_association = "disable"
+  default_route_table_propagation = "disable"
+
+  route_tables = [
+    {
+      name = "tardigrade-testing-${local.id}"
+      tags = {}
+    },
+  ]
 
   tags = {
     Name = "tardigrade-testing-${local.id}"
@@ -44,6 +67,16 @@ module "tgw_peer" {
   }
 
   description = "tardigrade-tgw-${local.id}"
+
+  default_route_table_association = "disable"
+  default_route_table_propagation = "disable"
+
+  route_tables = [
+    {
+      name = "tardigrade-testing-${local.id}"
+      tags = {}
+    },
+  ]
 
   tags = {
     Name = "tardigrade-testing-${local.id}"

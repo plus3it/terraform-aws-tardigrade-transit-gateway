@@ -27,6 +27,7 @@ Terraform module for managing a Transit Gateway Peering Attachment Accepter.
 |------|-------------|------|---------|:--------:|
 | <a name="input_peering_attachment_id"></a> [peering\_attachment\_id](#input\_peering\_attachment\_id) | ID of the TGW peering attachment | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW peering attachment | `map(string)` | `{}` | no |
+| <a name="input_transit_gateway_route_table_association"></a> [transit\_gateway\_route\_table\_association](#input\_transit\_gateway\_route\_table\_association) | ID of the Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br>    transit_gateway_route_table_id = string<br>  })</pre> | `null` | no |
 
 ## Outputs
 
