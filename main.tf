@@ -28,17 +28,14 @@ module "routes" {
   blackhole              = each.value.blackhole
   destination_cidr_block = each.value.destination_cidr_block
 
-  transit_gateway_route_table_id = each.value.default_route_table ? (
-    aws_ec2_transit_gateway.this.association_default_route_table_id) : (
-    try(
-      module.route_tables[each.value.transit_gateway_route_table].route_table.id,
-      each.value.transit_gateway_route_table
-    )
+  transit_gateway_route_table_id = each.value.default_route_table ? aws_ec2_transit_gateway.this.association_default_route_table_id : each.value.transit_gateway_route_table == null ? null : coalesce(
+    contains(var.route_tables[*].name, each.value.transit_gateway_route_table) ? module.route_tables[each.value.transit_gateway_route_table].route_table.id : null,
+    each.value.transit_gateway_route_table,
   )
 
-  transit_gateway_attachment_id = try(
-    module.vpc_attachments[each.value.transit_gateway_attachment].vpc_attachment.id,
-    each.value.transit_gateway_attachment
+  transit_gateway_attachment_id = each.value.transit_gateway_attachment == null ? null : coalesce(
+    contains(var.vpc_attachments[*].name, each.value.transit_gateway_attachment) ? module.vpc_attachments[each.value.transit_gateway_attachment].vpc_attachment.id : null,
+    each.value.transit_gateway_attachment,
   )
 }
 
@@ -57,17 +54,17 @@ module "vpc_attachments" {
   transit_gateway_default_route_table_propagation = each.value.transit_gateway_default_route_table_propagation
 
   transit_gateway_route_table_association = each.value.transit_gateway_route_table_association == null ? null : {
-    transit_gateway_route_table_id = try(
-      module.route_tables[each.value.transit_gateway_route_table_association].route_table.id,
-      each.value.transit_gateway_route_table_association
+    transit_gateway_route_table_id = coalesce(
+      contains(var.route_tables[*].name, each.value.transit_gateway_route_table_association) ? module.route_tables[each.value.transit_gateway_route_table_association].route_table.id : null,
+      each.value.transit_gateway_route_table_association,
     )
   }
 
   transit_gateway_route_table_propagations = [for route_table in each.value.transit_gateway_route_table_propagations : {
     name = route_table
-    transit_gateway_route_table_id = try(
-      module.route_tables[route_table].route_table.id,
-      route_table
+    transit_gateway_route_table_id = route_table == null ? null : coalesce(
+      contains(var.route_tables[*].name, route_table) ? module.route_tables[route_table].route_table.id : null,
+      route_table,
     )
   }]
 
