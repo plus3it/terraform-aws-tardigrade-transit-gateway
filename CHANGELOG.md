@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+### [2.3.1](https://github.com/plus3it/terraform-aws-tardigrade-transit-gateway/releases/tag/2.3.1)
+
+**Released**: 2024.08.21
+
+**Summary**:
+
+*   Improves compatibility with terraform <1.6 using ternary to short-circuit evaluation
+    instead of try
+*   Updates terraform provider version for when `options` was added to `aws_ec2_transit_gateway_peering_attachment`
+
 ### [2.3.0](https://github.com/plus3it/terraform-aws-tardigrade-transit-gateway/releases/tag/2.3.0)
 
 **Released**: 2024.08.20
