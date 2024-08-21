@@ -1,17 +1,20 @@
 variable "destination_cidr_block" {
   description = "IPv4 CIDR range used for destination matches"
   type        = string
+  nullable    = false
 }
 
 variable "transit_gateway_route_table_id" {
   description = "ID of EC2 Transit Gateway Route Table"
   type        = string
+  nullable    = false
 }
 
 variable "blackhole" {
   description = "Boolean indicating whether to drop traffic that matches this route"
   type        = bool
   default     = false
+  nullable    = false
 }
 
 
