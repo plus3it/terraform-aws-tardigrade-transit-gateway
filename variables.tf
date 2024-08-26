@@ -66,6 +66,23 @@ variable "vpn_ecmp_support" {
   }
 }
 
+variable "prefix_list_references" {
+  description = "List of TGW prefix list references to add to TGW route tables"
+  type = list(object({
+    # `name` used as for_each key
+    name           = string
+    prefix_list_id = string
+    # name from `route_tables` or id of a pre-existing route table
+    transit_gateway_route_table = string
+
+    blackhole           = optional(bool, false)
+    default_route_table = optional(bool, false)
+    # name from `vpc_attachments` or id of a pre-existing tgw attachment
+    transit_gateway_attachment = optional(string)
+  }))
+  default = []
+}
+
 variable "route_tables" {
   description = "List of TGW route tables to create with the transit gateway"
   type = list(object({
