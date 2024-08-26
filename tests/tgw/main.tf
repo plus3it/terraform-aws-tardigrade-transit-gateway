@@ -14,9 +14,10 @@ module "tgw" {
   dns_support                     = "enable"
   vpn_ecmp_support                = "disable"
 
-  route_tables    = local.route_tables
-  routes          = local.routes
-  vpc_attachments = local.vpc_attachments
+  prefix_list_references = local.prefix_list_references
+  route_tables           = local.route_tables
+  routes                 = local.routes
+  vpc_attachments        = local.vpc_attachments
 
   tags = {
     Name = "tardigrade-testing-${local.id}"
@@ -25,6 +26,24 @@ module "tgw" {
 
 locals {
   id = data.terraform_remote_state.prereq.outputs.test_id.result
+
+  prefix_list_references = [
+    {
+      # name used as for_each key
+      name                        = "foo-${local.id}"
+      prefix_list_id              = aws_ec2_managed_prefix_list.this.id
+      blackhole                   = false
+      transit_gateway_attachment  = "foo-${local.id}"
+      transit_gateway_route_table = "foo-${local.id}"
+    },
+    {
+      name                        = "bar-${local.id}"
+      prefix_list_id              = aws_ec2_managed_prefix_list.this.id
+      blackhole                   = false
+      transit_gateway_attachment  = "foo-${local.id}"
+      transit_gateway_route_table = "bar-${local.id}"
+    }
+  ]
 
   route_tables = [
     {
@@ -150,6 +169,23 @@ module "vpc2" {
   cidr            = "10.1.0.0/16"
   azs             = ["us-east-1a", "us-east-1b"]
   private_subnets = ["10.1.1.0/24", "10.1.2.0/24"]
+}
+
+resource "aws_ec2_managed_prefix_list" "this" {
+  name = "foo-prefix-list-${local.id}"
+
+  address_family = "IPv4"
+  max_entries    = 100
+
+  tags = {
+    Test = "tardigrade-testing-${local.id}"
+  }
+}
+
+resource "aws_ec2_managed_prefix_list_entry" "one" {
+  cidr           = "10.1.5.0/24"
+  description    = "foo-cidr5"
+  prefix_list_id = aws_ec2_managed_prefix_list.this.id
 }
 
 data "terraform_remote_state" "prereq" {

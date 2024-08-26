@@ -39,6 +39,24 @@ module "routes" {
   )
 }
 
+module "prefix_list_references" {
+  source   = "./modules/prefix-list-reference"
+  for_each = { for prefix_list_reference in var.prefix_list_references : prefix_list_reference.name => prefix_list_reference }
+
+  prefix_list_id = each.value.prefix_list_id
+  blackhole      = each.value.blackhole
+
+  transit_gateway_route_table_id = each.value.default_route_table ? aws_ec2_transit_gateway.this.association_default_route_table_id : each.value.transit_gateway_route_table == null ? null : coalesce(
+    contains(var.route_tables[*].name, each.value.transit_gateway_route_table) ? module.route_tables[each.value.transit_gateway_route_table].route_table.id : null,
+    each.value.transit_gateway_route_table,
+  )
+
+  transit_gateway_attachment_id = each.value.transit_gateway_attachment == null ? null : coalesce(
+    contains(var.vpc_attachments[*].name, each.value.transit_gateway_attachment) ? module.vpc_attachments[each.value.transit_gateway_attachment].vpc_attachment.id : null,
+    each.value.transit_gateway_attachment,
+  )
+}
+
 module "vpc_attachments" {
   source   = "./modules/vpc-attachment"
   for_each = { for attachment in var.vpc_attachments : attachment.name => attachment }

@@ -17,3 +17,8 @@ output "routes" {
   description = "Map of TGW route objects"
   value       = module.routes
 }
+
+output "prefix_list_references" {
+  description = "Map of TGW prefix list reference objects"
+  value       = module.prefix_list_references
+}
