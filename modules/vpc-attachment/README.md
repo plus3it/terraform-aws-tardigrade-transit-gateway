@@ -9,13 +9,13 @@ as well as any Transit Gateway route table association or propagations, and VPC 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.15.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.69.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.15.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.69.0 |
 
 ## Resources
 
@@ -34,6 +34,7 @@ as well as any Transit Gateway route table association or propagations, and VPC 
 | <a name="input_cross_account"></a> [cross\_account](#input\_cross\_account) | Boolean whether this is a cross-account Transit Gateway shared via Resource Access Manager | `bool` | `false` | no |
 | <a name="input_dns_support"></a> [dns\_support](#input\_dns\_support) | Whether DNS support is enabled. Valid values: disable, enable | `string` | `"enable"` | no |
 | <a name="input_ipv6_support"></a> [ipv6\_support](#input\_ipv6\_support) | Whether IPv6 support is enabled. Valid values: disable, enable | `string` | `"disable"` | no |
+| <a name="input_security_group_referencing_support"></a> [security\_group\_referencing\_support](#input\_security\_group\_referencing\_support) | Whether Security Group Referencing Support is enabled. Valid values: disable, enable | `string` | `"enable"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW VPC attachment | `map(string)` | `{}` | no |
 | <a name="input_transit_gateway_default_route_table_association"></a> [transit\_gateway\_default\_route\_table\_association](#input\_transit\_gateway\_default\_route\_table\_association) | Boolean whether the VPC Attachment should be associated to the Transit Gateway default route table | `bool` | `true` | no |
 | <a name="input_transit_gateway_default_route_table_propagation"></a> [transit\_gateway\_default\_route\_table\_propagation](#input\_transit\_gateway\_default\_route\_table\_propagation) | Boolean whether the VPC Attachment should propagate routes to the Transit Gateway propagation default route table | `bool` | `true` | no |

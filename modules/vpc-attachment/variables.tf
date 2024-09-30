@@ -44,6 +44,16 @@ variable "ipv6_support" {
   }
 }
 
+variable "security_group_referencing_support" {
+  description = "Whether Security Group Referencing Support is enabled. Valid values: disable, enable"
+  type        = string
+  default     = "enable"
+  validation {
+    condition     = contains(["enable", "disable"], var.security_group_referencing_support)
+    error_message = "`security_group_referencing_support` must be one of: \"enable\", \"disable\"."
+  }
+}
+
 variable "transit_gateway_default_route_table_association" {
   description = "Boolean whether the VPC Attachment should be associated to the Transit Gateway default route table"
   type        = bool
