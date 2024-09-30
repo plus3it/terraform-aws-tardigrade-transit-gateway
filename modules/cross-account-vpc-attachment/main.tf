@@ -1,14 +1,15 @@
 module "vpc_attachment" {
   source = "../vpc-attachment"
 
-  subnet_ids             = var.subnet_ids
-  transit_gateway_id     = var.transit_gateway_id
-  cross_account          = true
-  appliance_mode_support = var.appliance_mode_support
-  dns_support            = var.dns_support
-  ipv6_support           = var.ipv6_support
-  tags                   = var.tags
-  vpc_routes             = [for route in var.vpc_routes : route if route.provider == "aws"]
+  subnet_ids                         = var.subnet_ids
+  transit_gateway_id                 = var.transit_gateway_id
+  cross_account                      = true
+  appliance_mode_support             = var.appliance_mode_support
+  dns_support                        = var.dns_support
+  ipv6_support                       = var.ipv6_support
+  security_group_referencing_support = var.security_group_referencing_support
+  tags                               = var.tags
+  vpc_routes                         = [for route in var.vpc_routes : route if route.provider == "aws"]
 }
 
 module "vpc_accepter" {

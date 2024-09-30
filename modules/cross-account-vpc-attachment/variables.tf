@@ -59,6 +59,16 @@ variable "routes" {
   default = []
 }
 
+variable "security_group_referencing_support" {
+  description = "Whether Security Group Referencing Support is enabled. Valid values: disable, enable"
+  type        = string
+  default     = "enable"
+  validation {
+    condition     = contains(["enable", "disable"], var.security_group_referencing_support)
+    error_message = "`security_group_referencing_support` must be one of: \"enable\", \"disable\"."
+  }
+}
+
 variable "tags" {
   description = "Map of tags to apply to the TGW attachments"
   type        = map(string)
