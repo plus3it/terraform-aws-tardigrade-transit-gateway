@@ -96,8 +96,9 @@ variable "vpc_routes" {
     # `name` is used as for_each key
     name                        = string
     route_table_id              = string
-    destination_cidr_block      = string
-    destination_ipv6_cidr_block = string
+    destination_cidr_block      = optional(string)
+    destination_ipv6_cidr_block = optional(string)
+    destination_prefix_list_id  = optional(string)
   }))
   default = []
 }

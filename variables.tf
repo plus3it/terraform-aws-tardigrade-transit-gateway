@@ -129,13 +129,14 @@ variable "vpc_attachments" {
     dns_support            = string
     ipv6_support           = string
     tags                   = map(string)
-    vpc_routes = list(object({
+    vpc_routes = optional(list(object({
       # `name` is used as for_each key
       name                        = string
       route_table_id              = string
-      destination_cidr_block      = string
-      destination_ipv6_cidr_block = string
-    }))
+      destination_cidr_block      = optional(string)
+      destination_ipv6_cidr_block = optional(string)
+      destination_prefix_list_id  = optional(string)
+    })), [])
     transit_gateway_default_route_table_association = bool
     transit_gateway_default_route_table_propagation = bool
     # name from `route_tables` or id of a pre-existing route table
