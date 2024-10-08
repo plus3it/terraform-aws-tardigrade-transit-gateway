@@ -44,6 +44,7 @@ resource "aws_route" "this" {
   route_table_id              = each.value.route_table_id
   destination_cidr_block      = each.value.destination_cidr_block
   destination_ipv6_cidr_block = each.value.destination_ipv6_cidr_block
+  destination_prefix_list_id  = each.value.destination_prefix_list_id
   transit_gateway_id          = aws_ec2_transit_gateway_vpc_attachment.this.transit_gateway_id
 }
 
