@@ -191,7 +191,7 @@ module "vpc_member" {
 }
 
 module "vpc_owner" {
-  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v6.3.0"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v6.4.0"
   providers = {
     aws = aws.owner
   }
