@@ -18,7 +18,7 @@ module "peering_attachment" {
   }
 
   peer_account_id         = data.aws_caller_identity.peer.account_id
-  peer_region             = data.aws_region.peer.name
+  peer_region             = data.aws_region.peer.region
   peer_transit_gateway_id = module.tgw_peer.transit_gateway.id
   transit_gateway_id      = module.tgw.transit_gateway.id
 
