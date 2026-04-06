@@ -6,7 +6,8 @@ resource "aws_ec2_transit_gateway_vpc_attachment_accepter" "this" {
   transit_gateway_default_route_table_association = var.transit_gateway_default_route_table_association
   transit_gateway_default_route_table_propagation = var.transit_gateway_default_route_table_propagation
 
-  tags = var.tags
+  region = var.region
+  tags   = var.tags
 }
 
 resource "aws_ec2_transit_gateway_route_table_association" "this" {
@@ -14,6 +15,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "this" {
 
   transit_gateway_attachment_id  = var.auto_accept_shared_attachments == "disable" ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].id : var.transit_gateway_attachment_id
   transit_gateway_route_table_id = var.transit_gateway_route_table_association.transit_gateway_route_table_id
+  region                         = var.region
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
@@ -21,6 +23,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 
   transit_gateway_attachment_id  = var.auto_accept_shared_attachments == "disable" ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].id : var.transit_gateway_attachment_id
   transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
+  region                         = var.region
 }
 
 resource "aws_route" "this" {
@@ -31,10 +34,12 @@ resource "aws_route" "this" {
   destination_ipv6_cidr_block = each.value.destination_ipv6_cidr_block
   destination_prefix_list_id  = each.value.destination_prefix_list_id
   transit_gateway_id          = var.auto_accept_shared_attachments == "disable" ? aws_ec2_transit_gateway_vpc_attachment_accepter.this[0].transit_gateway_id : data.aws_ec2_transit_gateway_attachment.this[0].transit_gateway_id
+  region                      = var.region
 }
 
 data "aws_ec2_transit_gateway_attachment" "this" {
   count = var.auto_accept_shared_attachments == "enable" ? 1 : 0
 
   transit_gateway_attachment_id = var.transit_gateway_attachment_id
+  region                        = var.region
 }

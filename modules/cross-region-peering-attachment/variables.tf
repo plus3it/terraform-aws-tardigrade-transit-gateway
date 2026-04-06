@@ -40,6 +40,12 @@ variable "options" {
   }
 }
 
+variable "region" {
+  description = "AWS region where the Transit Gateway is located (if different from the provider region)"
+  type        = string
+  default     = null
+}
+
 variable "tags" {
   description = "Map of tags to apply to the TGW peering attachments"
   type        = map(string)

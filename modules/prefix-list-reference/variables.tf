@@ -22,3 +22,9 @@ variable "transit_gateway_attachment_id" {
   type        = string
   default     = null
 }
+
+variable "region" {
+  description = "AWS region where the Transit Gateway is located (if different from the provider region)"
+  type        = string
+  default     = null
+}

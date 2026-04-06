@@ -34,13 +34,13 @@ This module includes several submodules for different workflows and use cases.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.69.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.69.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.0 |
 
 ## Resources
 
@@ -58,6 +58,7 @@ This module includes several submodules for different workflows and use cases.
 | <a name="input_description"></a> [description](#input\_description) | Description of the EC2 Transit Gateway | `string` | `null` | no |
 | <a name="input_dns_support"></a> [dns\_support](#input\_dns\_support) | Whether DNS support is enabled (valid values: disable, enable) | `string` | `"enable"` | no |
 | <a name="input_prefix_list_references"></a> [prefix\_list\_references](#input\_prefix\_list\_references) | List of TGW prefix list references to add to TGW route tables | <pre>list(object({<br/>    # `name` used as for_each key<br/>    name           = string<br/>    prefix_list_id = string<br/>    # name from `route_tables` or id of a pre-existing route table<br/>    transit_gateway_route_table = string<br/><br/>    blackhole           = optional(bool, false)<br/>    default_route_table = optional(bool, false)<br/>    # name from `vpc_attachments` or id of a pre-existing tgw attachment<br/>    transit_gateway_attachment = optional(string)<br/>  }))</pre> | `[]` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region where the Transit Gateway is located (if different from the provider region) | `string` | `null` | no |
 | <a name="input_route_tables"></a> [route\_tables](#input\_route\_tables) | List of TGW route tables to create with the transit gateway | <pre>list(object({<br/>    # `name` used as for_each key<br/>    name = string<br/>    tags = map(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_routes"></a> [routes](#input\_routes) | List of TGW routes to add to TGW route tables | <pre>list(object({<br/>    # `name` used as for_each key<br/>    name                   = string<br/>    blackhole              = bool<br/>    default_route_table    = bool<br/>    destination_cidr_block = string<br/>    # name from `vpc_attachments` or id of a pre-existing tgw attachment<br/>    transit_gateway_attachment = string<br/>    # name from `route_tables` or id of a pre-existing route table<br/>    transit_gateway_route_table = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_security_group_referencing_support"></a> [security\_group\_referencing\_support](#input\_security\_group\_referencing\_support) | Whether Security Group Referencing Support is enabled. Valid values: disable, enable | `string` | `"enable"` | no |

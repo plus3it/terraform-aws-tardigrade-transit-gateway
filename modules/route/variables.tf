@@ -17,9 +17,14 @@ variable "blackhole" {
   nullable    = false
 }
 
-
 variable "transit_gateway_attachment_id" {
   description = "ID of EC2 Transit Gateway Attachment (required if `blackhole` is `false`)"
+  type        = string
+  default     = null
+}
+
+variable "region" {
+  description = "AWS region where the Transit Gateway is located (if different from the provider region)"
   type        = string
   default     = null
 }

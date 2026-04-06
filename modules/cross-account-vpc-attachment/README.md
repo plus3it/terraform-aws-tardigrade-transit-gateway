@@ -8,13 +8,13 @@ Terraform module for managing a cross-account Transit Gateway VPC Attachment.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.69.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws.owner"></a> [aws.owner](#provider\_aws.owner) | >= 5.69.0 |
+| <a name="provider_aws.owner"></a> [aws.owner](#provider\_aws.owner) | >= 6.0 |
 
 ## Resources
 
@@ -32,6 +32,7 @@ Terraform module for managing a cross-account Transit Gateway VPC Attachment.
 | <a name="input_auto_accept_shared_attachments"></a> [auto\_accept\_shared\_attachments](#input\_auto\_accept\_shared\_attachments) | Whether resource attachment requests are automatically accepted (valid values: disable, enable) | `string` | `"disable"` | no |
 | <a name="input_dns_support"></a> [dns\_support](#input\_dns\_support) | Whether DNS support is enabled. Valid values: disable, enable. | `string` | `"enable"` | no |
 | <a name="input_ipv6_support"></a> [ipv6\_support](#input\_ipv6\_support) | Whether IPv6 support is enabled. Valid values: disable, enable | `string` | `"disable"` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region where the Transit Gateway is located (if different from the provider region) | `string` | `null` | no |
 | <a name="input_routes"></a> [routes](#input\_routes) | List of TGW route objects with a target of the VPC attachment in the `aws.owner` account (TGW route tables are *only* in the `aws.owner` account) | <pre>list(object({<br/>    # `name` is used as for_each key<br/>    name                           = string<br/>    destination_cidr_block         = string<br/>    transit_gateway_route_table_id = string<br/>  }))</pre> | `[]` | no |
 | <a name="input_security_group_referencing_support"></a> [security\_group\_referencing\_support](#input\_security\_group\_referencing\_support) | Whether Security Group Referencing Support is enabled. Valid values: disable, enable | `string` | `"enable"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW attachments | `map(string)` | `{}` | no |

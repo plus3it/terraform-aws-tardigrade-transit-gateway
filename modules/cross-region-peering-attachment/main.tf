@@ -7,6 +7,7 @@ module "peering_attachment" {
 
   options         = var.options
   peer_account_id = var.peer_account_id
+  region          = var.region
   tags            = var.tags
 
   # Associate the Peering attachment with a TGW route table, while establishing
@@ -27,5 +28,6 @@ module "peering_accepter" {
   peering_attachment_id                   = module.peering_attachment.peering_attachment.id
   transit_gateway_route_table_association = var.peer_transit_gateway_route_table_association
 
-  tags = var.tags
+  region = var.peer_region
+  tags   = var.tags
 }

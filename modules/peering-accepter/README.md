@@ -8,13 +8,13 @@ Terraform module for managing a Transit Gateway Peering Attachment Accepter.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.0 |
 
 ## Resources
 
@@ -26,6 +26,7 @@ Terraform module for managing a Transit Gateway Peering Attachment Accepter.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_peering_attachment_id"></a> [peering\_attachment\_id](#input\_peering\_attachment\_id) | ID of the TGW peering attachment | `string` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | AWS region where the Transit Gateway is located (if different from the provider region) | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW peering attachment | `map(string)` | `{}` | no |
 | <a name="input_transit_gateway_route_table_association"></a> [transit\_gateway\_route\_table\_association](#input\_transit\_gateway\_route\_table\_association) | ID of the Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br/>    transit_gateway_route_table_id = string<br/>  })</pre> | `null` | no |
 
