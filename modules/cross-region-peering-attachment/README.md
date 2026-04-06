@@ -9,7 +9,7 @@ may be the same or different accounts, but must be different regions.
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.0 |
 
 ## Providers
 
@@ -29,6 +29,7 @@ No resources.
 | <a name="input_options"></a> [options](#input\_options) | Object of options for the TGW peering attachment | <pre>object({<br/>    dynamic_routing = optional(string)<br/>  })</pre> | `null` | no |
 | <a name="input_peer_account_id"></a> [peer\_account\_id](#input\_peer\_account\_id) | ID of the AWS account that owns the Transit Gateway peer | `string` | `null` | no |
 | <a name="input_peer_transit_gateway_route_table_association"></a> [peer\_transit\_gateway\_route\_table\_association](#input\_peer\_transit\_gateway\_route\_table\_association) | ID of the Peer Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br/>    transit_gateway_route_table_id = string<br/>  })</pre> | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS region where the Transit Gateway is located (if different from the provider region) | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of tags to apply to the TGW peering attachments | `map(string)` | `{}` | no |
 | <a name="input_transit_gateway_route_table_association"></a> [transit\_gateway\_route\_table\_association](#input\_transit\_gateway\_route\_table\_association) | ID of the Transit Gateway route table to associate with the Peering attachment (an attachment can be associated with a single TGW route table) | <pre>object({<br/>    transit_gateway_route_table_id = string<br/>  })</pre> | `null` | no |
 

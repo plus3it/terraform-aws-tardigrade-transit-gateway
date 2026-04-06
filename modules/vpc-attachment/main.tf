@@ -6,6 +6,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "this" {
   dns_support                        = var.dns_support
   ipv6_support                       = var.ipv6_support
   security_group_referencing_support = var.security_group_referencing_support
+  region                             = var.region
   tags                               = var.tags
 
   # default assocation and propagation values must be:
@@ -29,6 +30,7 @@ resource "aws_ec2_transit_gateway_route_table_association" "this" {
 
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this.id
   transit_gateway_route_table_id = var.transit_gateway_route_table_association.transit_gateway_route_table_id
+  region                         = var.region
 }
 
 resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
@@ -36,6 +38,7 @@ resource "aws_ec2_transit_gateway_route_table_propagation" "this" {
 
   transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.this.id
   transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
+  region                         = var.region
 }
 
 resource "aws_route" "this" {
@@ -46,13 +49,17 @@ resource "aws_route" "this" {
   destination_ipv6_cidr_block = each.value.destination_ipv6_cidr_block
   destination_prefix_list_id  = each.value.destination_prefix_list_id
   transit_gateway_id          = aws_ec2_transit_gateway_vpc_attachment.this.transit_gateway_id
+  region                      = var.region
 }
 
 data "aws_subnet" "one" {
-  id = var.subnet_ids[0]
+  id     = var.subnet_ids[0]
+  region = var.region
 }
 
 data "aws_ec2_transit_gateway" "this" {
   count = var.cross_account ? 0 : 1
-  id    = var.transit_gateway_id
+
+  id     = var.transit_gateway_id
+  region = var.region
 }

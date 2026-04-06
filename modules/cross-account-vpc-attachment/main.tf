@@ -7,6 +7,7 @@ module "vpc_attachment" {
   appliance_mode_support             = var.appliance_mode_support
   dns_support                        = var.dns_support
   ipv6_support                       = var.ipv6_support
+  region                             = var.region
   security_group_referencing_support = var.security_group_referencing_support
   tags                               = var.tags
   vpc_routes                         = [for route in var.vpc_routes : route if route.provider == "aws"]
@@ -21,6 +22,7 @@ module "vpc_accepter" {
   transit_gateway_attachment_id  = module.vpc_attachment.vpc_attachment.id
   auto_accept_shared_attachments = var.auto_accept_shared_attachments
   vpc_routes                     = [for route in var.vpc_routes : route if route.provider == "aws.owner"]
+  region                         = var.region
   tags                           = var.tags
 
   transit_gateway_route_table_association  = var.transit_gateway_route_table_association
@@ -47,11 +49,14 @@ module "routes" {
   }
 
   destination_cidr_block         = each.value.destination_cidr_block
+  region                         = var.region
   transit_gateway_attachment_id  = module.vpc_accepter.vpc_attachment_accepter.id
   transit_gateway_route_table_id = each.value.transit_gateway_route_table_id
 }
 
 data "aws_ec2_transit_gateway" "this" {
   provider = aws.owner
-  id       = var.transit_gateway_id
+
+  id     = var.transit_gateway_id
+  region = var.region
 }

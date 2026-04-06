@@ -5,6 +5,7 @@ resource "aws_ec2_transit_gateway" "this" {
   default_route_table_propagation    = var.default_route_table_propagation
   description                        = var.description
   dns_support                        = var.dns_support
+  region                             = var.region
   security_group_referencing_support = var.security_group_referencing_support
   tags                               = var.tags
   vpn_ecmp_support                   = var.vpn_ecmp_support
@@ -15,6 +16,7 @@ module "route_tables" {
   for_each = { for route_table in var.route_tables : route_table.name => route_table }
 
   transit_gateway_id = aws_ec2_transit_gateway.this.id
+  region             = var.region
 
   tags = merge(
     { "Name" : each.key },
@@ -28,6 +30,7 @@ module "routes" {
 
   blackhole              = each.value.blackhole
   destination_cidr_block = each.value.destination_cidr_block
+  region                 = var.region
 
   transit_gateway_route_table_id = each.value.default_route_table ? aws_ec2_transit_gateway.this.association_default_route_table_id : each.value.transit_gateway_route_table == null ? null : coalesce(
     contains(var.route_tables[*].name, each.value.transit_gateway_route_table) ? module.route_tables[each.value.transit_gateway_route_table].route_table.id : null,
@@ -46,6 +49,7 @@ module "prefix_list_references" {
 
   prefix_list_id = each.value.prefix_list_id
   blackhole      = each.value.blackhole
+  region         = var.region
 
   transit_gateway_route_table_id = each.value.default_route_table ? aws_ec2_transit_gateway.this.association_default_route_table_id : each.value.transit_gateway_route_table == null ? null : coalesce(
     contains(var.route_tables[*].name, each.value.transit_gateway_route_table) ? module.route_tables[each.value.transit_gateway_route_table].route_table.id : null,
@@ -67,6 +71,7 @@ module "vpc_attachments" {
   appliance_mode_support = each.value.appliance_mode_support
   dns_support            = each.value.dns_support
   ipv6_support           = each.value.ipv6_support
+  region                 = var.region
   vpc_routes             = each.value.vpc_routes
 
   transit_gateway_default_route_table_association = each.value.transit_gateway_default_route_table_association

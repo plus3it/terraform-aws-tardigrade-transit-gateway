@@ -1,10 +1,10 @@
 provider "aws" {
-  region  = "us-east-1"
+  region  = local.region
   profile = "aws"
 }
 
 provider "aws" {
-  region  = "us-east-2"
+  region  = local.region
   alias   = "peer"
   profile = "awsalternate"
 }
@@ -18,7 +18,7 @@ module "peering_attachment" {
   }
 
   peer_account_id         = data.aws_caller_identity.peer.account_id
-  peer_region             = data.aws_region.peer.region
+  peer_region             = local.peer_region
   peer_transit_gateway_id = module.tgw_peer.transit_gateway.id
   transit_gateway_id      = module.tgw.transit_gateway.id
 
@@ -67,6 +67,7 @@ module "tgw_peer" {
   }
 
   description = "tardigrade-tgw-${local.id}"
+  region      = local.peer_region
 
   default_route_table_association = "disable"
   default_route_table_propagation = "disable"
@@ -85,7 +86,9 @@ module "tgw_peer" {
 
 
 locals {
-  id = data.terraform_remote_state.prereq.outputs.test_id.result
+  id          = data.terraform_remote_state.prereq.outputs.test_id.result
+  region      = "us-east-1"
+  peer_region = "us-east-2"
 }
 
 data "terraform_remote_state" "prereq" {
